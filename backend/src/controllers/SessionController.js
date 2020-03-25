@@ -14,8 +14,6 @@ module.exports = {
             });
         }
 
-        response.header('Authorization', ong.key);
-
         return response.json(ong.name);
     },
 }
