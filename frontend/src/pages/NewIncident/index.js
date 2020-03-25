@@ -64,17 +64,20 @@ export default function NewIncident() {
                     <input 
                         placeholder="Título do caso"
                         value={title}
+                        required
                         onChange={e => setTitle(e.target.value)}
                     />
                     <textarea 
                         placeholder="Descrição"
                         value={description}
+                        required
                         onChange={e => setDescription(e.target.value)}
                     />
                     <input 
                         type="tel" 
                         placeholder="Valor em reais"
                         value={value}
+                        required
                         onChange={e => setValue(e.target.value)}
                     />
                     <div className="button-group">
