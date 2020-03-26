@@ -21,6 +21,8 @@ Clone o repositório, utilizando **git clone** ou faça o **download** do reposi
 
 *aviso que o arquivo de gravação de tela do emulador que esta na pasta vídeo possui 25mb*
 
+
+
 Após clonar ou baixar o repositório instale as dependências necessárias:
 
 Utilize o **npm** para instalar as dependências nas pastas *backend*, *frontend*, *mobile*.
