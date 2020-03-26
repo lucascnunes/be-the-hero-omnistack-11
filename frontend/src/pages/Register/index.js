@@ -38,6 +38,7 @@ export default function Register() {
       setSuccessRegistration(true);
     } catch (error) {
       setSuccessRegistration(false);
+      alert('Não foi possível fazer seu cadastro.');
     }
   }
 

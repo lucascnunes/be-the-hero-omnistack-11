@@ -67,27 +67,31 @@ export default function Profile() {
 
             <h1>Casos cadastrados</h1>
 
-            <ul>
-                {incidents.map(incident => (
-                    <li key={incident.id}>
-                        <span className="caso-titulo">Caso:</span>
-                        <p>{incident.title}</p>
+            {(incidents.length > 0) ?
+                    <ul>
+                        {incidents.map(incident => (
+                            <li key={incident.id}>
+                                <span className="caso-titulo">Caso:</span>
+                                <p>{incident.title}</p>
 
-                        <span className="caso-titulo">Descrição</span>
-                        <p>{incident.description}</p>
+                                <span className="caso-titulo">Descrição</span>
+                                <p>{incident.description}</p>
 
-                        <span className="caso-titulo">Valor:</span>
-                        <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                <span className="caso-titulo">Valor:</span>
+                                <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
 
-                        <button 
-                            type="button"
-                            onClick={() => handleDeleteIncident(incident.id)}
-                        >
-                            <FiTrash2 size={20} color="#a8a8b3" />
-                        </button>
-                    </li>
-                ))}
-            </ul>
+                                <button 
+                                    type="button"
+                                    onClick={() => handleDeleteIncident(incident.id)}
+                                >
+                                    <FiTrash2 size={20} color="#a8a8b3" />
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                :
+                <p>Ainda não há casos a serem exibidos.</p>
+            }
         </div>
     );
 }
