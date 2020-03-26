@@ -38,6 +38,7 @@ export default function Logon() {
           <input
             value={key}
             onChange={e => setKey(e.target.value)}
+            required
             placeholder='Sua KEY'
           />
           <button className='button' type='submit'>
