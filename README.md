@@ -19,7 +19,7 @@ git, node, express, knex, sqlite, react, react-native, expo
 
 Clone o repositório, utilizando **git clone** ou faça o **download** do repositório.
 
-*aviso que o arquivo de gravação de tela do emulador que esta na pasta vídeo possui 25mb*
+**aviso que o arquivo de gravação de tela do emulador que esta na pasta vídeo possui 25mb**
 
 
 
