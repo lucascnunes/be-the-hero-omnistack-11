@@ -46,6 +46,7 @@ export default function Profile() {
             // retorne e não faça nada
             return;
         }
+
         // define loading verdadeiro
         setLoading(true);
 
@@ -58,10 +59,13 @@ export default function Profile() {
             // define um params no pedido get chamado page com o valor da pagina atual
             params: { page }
         });
+
         // concatena(junta) os incidents atuais da lista junto com os incidents enviados pelo backend no data da resposta
         setIncidents([...incidents, ...response.data]);
+
         // pega o total de incidents do cabeçalho da resposta
         setTotal(response.headers['x-total-count']);
+        
         // soma 1 a pagina atual
         setPage(page+1);
 
