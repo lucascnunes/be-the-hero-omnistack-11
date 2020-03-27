@@ -46,7 +46,7 @@ export default function Incidents() {
     // define a função sendWhatsapp para abrir o aplicativo dentro do celular
     function sendWhatsapp() {
         // utiliza o Linking para abrir o aplicativo passando os parametros de phone e text com o numero do whatsapp da ong do incident e da mensagem
-        Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
+        Linking.openURL(`whatsapp://send?phone=55${incident.whatsapp}&text=${message}`);
     }
     
     // exibe o jsx abaixo
