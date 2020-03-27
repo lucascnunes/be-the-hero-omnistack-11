@@ -1,8 +1,9 @@
 # dependencies
 /node_modules
 
-# database
+# databases
 src/database/dev.sqlite
+src/database/test.sqlite
 
 # misc
 .env.local
