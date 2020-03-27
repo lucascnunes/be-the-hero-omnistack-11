@@ -44,7 +44,7 @@ module.exports = {
                 .where('id', ong.id)
                 .delete();
         } catch (error) {
-            return response.status(500).json({
+            return response.status(400).json({
                 error: 'Error while DELETING.',
                 message: error,
             });

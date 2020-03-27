@@ -54,7 +54,7 @@ module.exports = {
                     uf
                 });
         } catch (error) {
-            return response.status(500).json({
+            return response.status(400).json({
                 error: 'Error while UPDATING.',
                 message: error,
             });
