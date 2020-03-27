@@ -38,6 +38,7 @@ routes.put('/account', celebrate(updateAccountValidation), AccountController.upd
 // Rotas de incidents
 routes.get('/incidents', celebrate(incidentsValidation), IncidentController.index);
 routes.post('/incidents', IncidentController.create);
+routes.get('/incidents/:id', IncidentController.show);
 routes.delete('/incidents/:id', celebrate(deleteIncidentValidation), IncidentController.delete);
 
 module.exports = routes;
