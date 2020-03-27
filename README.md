@@ -63,7 +63,8 @@ RegisterSuccess
 onRefresh={loadIncidents}
 refreshing={loading}
 ```
-  
+  * Adicionado paginação no perfil da ONG frontend.
+
 ## Autor
 
 **Lucas Nunes** 
