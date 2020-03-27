@@ -98,7 +98,7 @@ export default function Profile() {
             // soma 1 página atual
             setPage(page+1);
         });
-    }, [ongKey]);
+    }, [ongKey, history, page]);
 
     // define a função handleDeleteIncident
     async function handleDeleteIncident(id) {

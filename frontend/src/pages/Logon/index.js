@@ -66,7 +66,7 @@ export default function Logon() {
       // mostra o alerta
       setShowDeleteAlert(true);
     }
-  });
+  }, [deleteAlert, history]);
 
   // exibir jsx
   return (
