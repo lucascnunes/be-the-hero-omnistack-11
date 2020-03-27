@@ -29,6 +29,18 @@ module.exports = {
     async create(request, response) {
         const { title, description, value } = request.body;
         const ongs_key = request.headers.authorization;
+        
+        const ong = await connection('ongs')
+            .select('id')
+            .where('key', ongs_key)
+            .first();
+
+        if (!ong) {
+            return response.status(401).json({
+                error: 'Not authorized.'
+            });
+        }
+
         const ongs_id = await connection('ongs')
             .select('id')
             .where('key', ongs_key)
@@ -52,6 +64,12 @@ module.exports = {
             .select('id')
             .where('key', ongs_key)
             .first();
+
+        if (!ongs_id) {
+            return response.status(401).json({
+                error: 'Not authorized.'
+            });
+        }
 
         const incident = await connection('incidents')
             .where('id', id)
