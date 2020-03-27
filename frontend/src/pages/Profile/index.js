@@ -71,18 +71,18 @@ export default function Profile() {
         setPage(page+1);
         // define loading falso
         setLoading(false);
+    
+    }
+    
+    if (history.location.state && history.location.state.updated) {
+        setShowUpdateAlert(true);
+        setTimeout(() => {
+            setShowUpdateAlert(false);
+        }, 5000);
     }
 
     // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o ongKey mudar
     useEffect(() => {
-
-        if (history.location.state && history.location.state.updated) {
-            setShowUpdateAlert(true);
-            setTimeout(() => {
-                setShowUpdateAlert(false);
-            }, 5000);
-        }
-
         // faz um pedido GET para a rota do backend 'profile'
         api.get('profile', {
             headers: {
@@ -95,10 +95,10 @@ export default function Profile() {
             setIncidents(response.data);
             // define o total tirando do cabeçalho da resposta o x-total-count
             setTotal(response.headers['x-total-count']);
-            // soma 1 página atual
-            setPage(page+1);
+            // carrega a primeira pagina e já coloca a segunda
+            setPage(2);
         });
-    }, [ongKey, history, page]);
+    }, [ongKey]);
 
     // define a função handleDeleteIncident
     async function handleDeleteIncident(id) {
