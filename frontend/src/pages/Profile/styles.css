@@ -96,8 +96,12 @@
     font-size: 16px;
 }
 
-.align-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.profile-container .confirmUpdate {
+    margin-top: 65px;
+    text-align: center;
+    padding: 20px;
+    background: #bcf8d7;
+    color: #019141;
+    border: 1px solid #019141;
+    border-radius: 8px;
 }

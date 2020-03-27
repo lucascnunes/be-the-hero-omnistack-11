@@ -24,3 +24,14 @@
     font-size: 32px;
     margin-bottom: 32px;
 }
+
+
+.logon-container section .confirmDelete {
+    border: 1px solid rgb(219, 11, 11);
+    border-radius: 8px;
+    text-align: center;
+    background: rgb(255, 186, 186);
+    padding: 30px 10px;
+    margin-top: 30px;
+    color: rgb(219, 11, 11);
+}

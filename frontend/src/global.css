@@ -80,3 +80,9 @@ form textarea {
 .svg-link svg {
     margin-right: 8px;
 }
+
+.align-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

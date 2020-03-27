@@ -32,6 +32,7 @@ export default function Profile() {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [updateAlert, setShowUpdateAlert] = useState(false);
 
     // define a função loadIncidents
     async function loadIncidents() {
@@ -74,6 +75,14 @@ export default function Profile() {
 
     // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o ongKey mudar
     useEffect(() => {
+
+        if (history.location.state && history.location.state.updated) {
+            setShowUpdateAlert(true);
+            setTimeout(() => {
+                setShowUpdateAlert(false);
+            }, 5000);
+        }
+
         // faz um pedido GET para a rota do backend 'profile'
         api.get('profile', {
             headers: {
@@ -137,6 +146,14 @@ export default function Profile() {
                     <FiPower size={18} color="#E02041" />
                 </button>
             </header>
+
+            {(updateAlert ?
+                <div className="confirmUpdate">
+                    Sua conta foi atualizada com sucesso.
+                </div>
+            :
+                ''
+            )}
 
             <h1>Casos cadastrados</h1>
 

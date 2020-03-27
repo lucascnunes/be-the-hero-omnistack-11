@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 // carrega o icone LogIn do feather icon
@@ -19,6 +19,9 @@ export default function Logon() {
 
   // define o state key
   const [key, setKey] = useState("");
+  
+  // define o state
+  const [deleteAlert, setShowDeleteAlert] = useState(false);
   
   // instancia o history
   const history = useHistory();
@@ -56,6 +59,15 @@ export default function Logon() {
     }
   }
 
+  // utiliza o useEffect para carregar uma vez toda vez que for carregada a página
+  useEffect(() => {
+    // verifica se na rota atual ha um state definido chamado deleted
+    if (history.location.state && history.location.state.deleted) {
+      // mostra o alerta
+      setShowDeleteAlert(true);
+    }
+  });
+
   // exibir jsx
   return (
     <div className='logon-container'>
@@ -72,6 +84,13 @@ export default function Logon() {
           <button className='button' type='submit'>
             Entrar
           </button>
+      {(deleteAlert ?
+          <div className="confirmDelete">
+              Sua conta foi apagada, é uma pena que decidiu sair, crie uma conta nova quando quiser voltar, estaremos lhe esperando.
+          </div>
+      :
+          ''
+      )}
           <Link to='/register' className='svg-link'>
             <FiLogIn size={16} color='#E02041' />
             Não tenho cadastro
