@@ -1,71 +1,43 @@
 const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
 
+// instanciando os controladores
 const SessionController = require('./controllers/SessionController');
 const OngController = require('./controllers/OngController');
 const ProfileController = require('./controllers/ProfileController');
 const IncidentController = require('./controllers/IncidentController');
 const AccountController = require('./controllers/AccountController');
 
+// instanciando as validações
+const sessionValidation = require('./validations/Session/SessionValidation');
+const createOngValidation = require('./validations/Ong/CreateOngValidation');
+const deleteOngValidation = require('./validations/Ong/DeleteOngValidation');
+const profileValidation = require('./validations/Profile/ProfileValidation');
+const accountValidation = require('./validations/Account/AccountValidation');
+const updateAccountValidation = require('./validations/Account/UpdateAccountValidation');
+const incidentsValidation = require('./validations/Incident/IncidentsValidation');
+const deleteIncidentValidation = require('./validations/Incident/DeleteIncidentValidation');
+
 const routes = express.Router();
 
 // Rota de login
-routes.post('/sessions', celebrate({
-    [Segments.BODY]: Joi.object().keys({
-        key: Joi.string().required(),
-    }),
-}), SessionController.create);
+routes.post('/sessions', celebrate(sessionValidation), SessionController.create);
 
 // Rotas de ONGs
 routes.get('/ongs', OngController.index);
-routes.post('/ongs', celebrate({
-    [Segments.BODY]: Joi.object().keys({
-        name: Joi.string().required(),
-        email: Joi.string().required().email(),
-        whatsapp: Joi.string().required().min(10).max(11),
-        city: Joi.string().required(),
-        uf: Joi.string().length(2),
-    }),
-}), OngController.create);
-routes.delete('/ongs', celebrate({
-    [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required(),
-    }).unknown(),
-}), OngController.delete);
+routes.post('/ongs', celebrate(createOngValidation), OngController.create);
+routes.delete('/ongs', celebrate(deleteOngValidation), OngController.delete);
 
 // Rota Profile
-routes.get('/profile', celebrate({
-    [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required(),
-    }).unknown(),
-    [Segments.QUERY]: Joi.object().keys({
-        page: Joi.number()
-    }),
-}), ProfileController.index);
+routes.get('/profile', celebrate(profileValidation), ProfileController.index);
 
 // Rota de conta
-routes.get('/account', celebrate({
-    [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required(),
-    }).unknown(),
-}), AccountController.index);
-routes.put('/account', celebrate({
-    [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required(),
-    }).unknown(),
-}), AccountController.update);
+routes.get('/account', celebrate(accountValidation), AccountController.index);
+routes.put('/account', celebrate(updateAccountValidation), AccountController.update);
 
 // Rotas de incidents
-routes.get('/incidents', celebrate({
-    [Segments.QUERY]: Joi.object().keys({
-        page: Joi.number()
-    }),
-}), IncidentController.index);
+routes.get('/incidents', celebrate(incidentsValidation), IncidentController.index);
 routes.post('/incidents', IncidentController.create);
-routes.delete('/incidents/:id', celebrate({
-    [Segments.PARAMS]: Joi.object().keys({
-        id: Joi.number().required()
-    }),
-}), IncidentController.delete);
+routes.delete('/incidents/:id', celebrate(deleteIncidentValidation), IncidentController.delete);
 
 module.exports = routes;
