@@ -55,6 +55,7 @@ export default function NewIncident() {
             // envia os dados do formulário como metodo post para a rota 'incidents' do backend
             await api.post('incidents', data, {
                 headers: {
+                    // envia a ongKey para o backend pelo cabeçalho da requisição
                     'Authorization': ongKey
                 }
             });
