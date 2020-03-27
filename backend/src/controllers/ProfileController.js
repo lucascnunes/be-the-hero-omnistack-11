@@ -18,6 +18,7 @@ module.exports = {
         }
 
         const [count] = await connection('incidents')
+            .where('ongs_id', ong.id)
             .count();
 
         const incidents = await connection('incidents')

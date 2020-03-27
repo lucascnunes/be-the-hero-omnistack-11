@@ -117,7 +117,7 @@ export default function Profile() {
                                 </li>
                             ))}
                         </ul>
-                        {(total > 0 && incidents.length < total) ? 
+                        {(total > 0 && incidents.length < total) ?
                             <div className="align-center">
                                 <button
                                 type="button"
