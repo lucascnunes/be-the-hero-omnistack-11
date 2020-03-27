@@ -20,8 +20,6 @@ export default function Incidents() {
         navigation.navigate('Detail', { incident });
     }
 
-    const loadingMessage = (loading ?? <View style={styles.loadingMessage}><Text>Carregando mais...</Text></View>)
-
     async function loadIncidents() {
         if(loading) {
             return;
@@ -40,6 +38,7 @@ export default function Incidents() {
         setIncidents([...incidents, ...response.data]);
         setTotal(response.headers['x-total-count']);
         setPage(page+1);
+
         setLoading(false);
     }
 

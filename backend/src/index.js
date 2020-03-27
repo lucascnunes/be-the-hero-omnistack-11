@@ -5,7 +5,8 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors({
-    // origin: ""
+    // origin: "",
+    exposedHeaders: ['Access-Control-Allow-Origin', 'X-Total-Count']
 }));
 app.use(express.json());
 app.use(routes);

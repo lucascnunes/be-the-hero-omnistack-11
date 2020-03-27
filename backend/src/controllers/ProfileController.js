@@ -21,8 +21,8 @@ module.exports = {
             .count();
 
         const incidents = await connection('incidents')
-            .limit(5)
-            .offset((page - 1) * 5)
+            .limit(6)
+            .offset((page - 1) * 6)
             .select('*')
             .where('ongs_id', ong.id);
     

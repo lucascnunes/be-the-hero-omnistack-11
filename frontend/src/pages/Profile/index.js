@@ -19,16 +19,46 @@ export default function Profile() {
     }
     
     const [incidents, setIncidents] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        api.get('profile', {
+    async function loadIncidents() {
+        if(loading) {
+            return;
+        }
+        
+        if (total > 0 && incidents.length === total) {
+            return;
+        }
+
+        setLoading(true);
+
+        const response = await api.get('profile', {
             headers: {
                 'Authorization': ongKey
-            }
-        })
-        .then(response => {
-            setIncidents(response.data);
-        })
+            },
+            params: { page }
+        });
+        setIncidents([...incidents, ...response.data]);
+        setTotal(response.headers['x-total-count']);
+        setPage(page+1);
+
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        function loadData() {
+            api.get('profile', {
+                headers: {
+                    'Authorization': ongKey
+                }
+            }).then(response => {
+                setIncidents(response.data);
+                setTotal(response.headers['x-total-count']);
+            });
+        }
+        loadData();
     }, [ongKey]);
 
     async function handleDeleteIncident(id) {
@@ -67,31 +97,46 @@ export default function Profile() {
 
             <h1>Casos cadastrados</h1>
 
-            {(incidents.length > 0) ?
-                    <ul>
-                        {incidents.map(incident => (
-                            <li key={incident.id}>
-                                <span className="caso-titulo">Caso:</span>
-                                <p>{incident.title}</p>
+            {(incidents.length > 0 ?
+                    <div>
+                        <ul>
+                            {incidents.map(incident => (
+                                <li key={incident.id}>
+                                    <span className="caso-titulo">Caso:</span>
+                                    <p>{incident.title}</p>
 
-                                <span className="caso-titulo">Descrição</span>
-                                <p>{incident.description}</p>
+                                    <span className="caso-titulo">Descrição</span>
+                                    <p>{incident.description}</p>
 
-                                <span className="caso-titulo">Valor:</span>
-                                <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                    <span className="caso-titulo">Valor:</span>
+                                    <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
 
-                                <button 
-                                    type="button"
-                                    onClick={() => handleDeleteIncident(incident.id)}
+                                    <button 
+                                        type="button"
+                                        onClick={() => handleDeleteIncident(incident.id)}
+                                    >
+                                        <FiTrash2 size={20} color="#a8a8b3" />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                        {(total > 0 && incidents.length < total) ? 
+                            <div className="align-center">
+                                <button
+                                type="button"
+                                className="button"
+                                onClick={loadIncidents}
                                 >
-                                    <FiTrash2 size={20} color="#a8a8b3" />
+                                    Carregar mais
                                 </button>
-                            </li>
-                        ))}
-                    </ul>
-                :
-                <p>Ainda não há casos a serem exibidos.</p>
-            }
+                            </div>
+                        :
+                            ''
+                        }
+                    </div>
+                : <p>Ainda não há casos a serem exibidos.</p>
+            )}
+            
         </div>
     );
 }
