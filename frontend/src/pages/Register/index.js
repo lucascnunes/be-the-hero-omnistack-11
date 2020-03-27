@@ -1,29 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+
+// carrega o icone da seta para esquerda do pacote feather icons
 import { FiArrowLeft } from "react-icons/fi";
 
+// carrega a página RegisterSuccess
 import RegisterSuccess from '../RegisterSuccess';
 
-import api from "../../services/api";
+// carrega a api
+import api from '../../services/api';
 
-import "./styles.css";
+// importa o styles local
+import './styles.css';
 
-import logoImg from "../../assets/logo.svg";
+// carrega o logo da pasta assets
+import logoImg from '../../assets/logo.svg';
 
 export default function Register() {
+  // define um state para ver se o registro obteve sucesso ou não
   const [successRegistration, setSuccessRegistration] = useState(false);
 
+  // define os states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
-
   const [ong_key, setOngKey] = useState("");
 
+  // instancia o btnRegister como uma referencia
+  const btnRegister = useRef();
+ 
+  // define a função handleRegister
   async function handleRegister(e) {
+    // previne o funcionamento normal do envio do formulário
     e.preventDefault();
 
+    // Desabilita o botao para que não seja enviado o formulário mais de uma vez
+    btnRegister.current.setAttribute('disabled', true);
+
+    // armazena os states dentro da variavel data
     const data = {
       name,
       email,
@@ -32,22 +48,36 @@ export default function Register() {
       uf,
     };
 
+    // bloco de declaração try, se funcionar:
     try {
+      // envia os dados do formulário como metodo post para a rota 'ongs' do backend
       const response = await api.post('ongs', data);
+      // define o state ongsKey com a KEY vinda da resposta do api.post acima
       setOngKey(response.data.key);
+      // define o state successRegistration como verdadeiro
       setSuccessRegistration(true);
+
+    // se der erro
     } catch (error) {
+      // libera o uso do botão novamente
+      btnRegister.current.removeAttribute('disabled');
+      // define o state successRegistration como falso
       setSuccessRegistration(false);
+      // envia alerta de erro ao navegador
       alert('Não foi possível fazer seu cadastro.');
     }
   }
 
+  // se o registro foi um sucesso
   if (successRegistration) {
+    // exibe este jsx com a página RegisterSuccess com um children da ong_key
     return (
       <RegisterSuccess>
         {ong_key}
       </RegisterSuccess>
     );
+    
+  // se não tiver feito ainda o registro ou não foi um sucesso exiba ou mantenha este jsx
   } else {
     return (
       <div className="register-container">
@@ -98,7 +128,7 @@ export default function Register() {
                   }}
               />
             </div>
-            <button className="button" type="submit">
+            <button ref={btnRegister} className="button" type="submit">
               Cadastrar
             </button>
           </form>
