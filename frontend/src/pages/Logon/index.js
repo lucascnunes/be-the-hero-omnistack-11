@@ -23,6 +23,15 @@ export default function Logon() {
   // instancia o history
   const history = useHistory();
 
+  // pega a ongKey do localstorage
+  const ongKey = localStorage.getItem('ongKey');
+  
+  // Se houver uma ongKEY salva no localStorage
+  if (ongKey) {
+    // envia o usuário para tela de profile
+    history.push('/profile');
+  }
+
   // define a função handleLogin
   async function handleLogin(e) {
     // previne o funcionamento normal do envio do formulário
