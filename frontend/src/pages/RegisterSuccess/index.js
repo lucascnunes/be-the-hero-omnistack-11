@@ -1,14 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
+// importa o styles local
 import "./styles.css";
 
+// carrega o logo da pasta assets
 import logoImg from "../../assets/logo.svg";
 
 export default function RegisterSuccess({ children }) {
   
+  // instancia o history
   const history = useHistory();
 
+  // exibe o jsx
   return (
     <div className="register-success-container">
       <div className="content">
@@ -26,7 +30,7 @@ export default function RegisterSuccess({ children }) {
           </h1>
           <button 
             className="button"
-            // Utilizando history push somente para aprender
+            // Utilizando history push para levar o usuario a página inicial somente para aprender
             onClick={() => history.push('/')}
           >
             Fazer logon

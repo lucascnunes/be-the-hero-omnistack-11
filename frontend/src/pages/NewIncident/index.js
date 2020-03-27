@@ -21,8 +21,9 @@ export default function NewIncident() {
     // pega a ongKey do localstorage
     const ongKey = localStorage.getItem("ongKey");
 
-    // Se não houver uma ongKEY salva no localStorage envia o usuário para tela inicial
+    // Se não houver uma ongKEY salva no localStorage
     if (!ongKey) {
+        // envia o usuário para tela inicial
         history.push('/');
     }
 

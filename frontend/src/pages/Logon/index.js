@@ -1,34 +1,53 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+
+// carrega o icone LogIn do feather icon
 import { FiLogIn } from "react-icons/fi";
 
+// carrega a api
 import api from '../../services/api';
 
-import "./styles.css";
+// importa o styles local
+import './styles.css';
 
+// carrega o logo da pasta assets
 import logoImg from "../../assets/logo.svg";
+// carrega o heroes img da pasta assets
 import heroesImg from "../../assets/heroes.png";
 
 export default function Logon() {
 
+  // define o state key
   const [key, setKey] = useState("");
+  
+  // instancia o history
   const history = useHistory();
 
+  // define a função handleLogin
   async function handleLogin(e) {
+    // previne o funcionamento normal do envio do formulário
     e.preventDefault();
 
+    // bloco de declaração try, se funcionar:
     try {
       const response = await api.post('sessions', { key })
 
+      // guarda no localStorage a ongKey
       localStorage.setItem('ongKey', key);
+      // guarda no localStorage a ongName
       localStorage.setItem('ongName', response.data);
 
+      // direciona para página profile
       history.push('/profile');
+    
+    // se der erro
     } catch (error) {
-      console.log('Falha no login');
+      // exibe alerta no navegador
+      alert('Falha no login, tente novamente');
     }
   }
 
+  // exibir jsx
   return (
     <div className='logon-container'>
       <section className='form'>
