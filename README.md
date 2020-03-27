@@ -66,6 +66,9 @@ onRefresh={loadIncidents}
 refreshing={loading}
 ```
   * Adicionado paginação no perfil da ONG frontend.
+  * Adicionado tela de edição de ONG
+  * Adicionado botão de apagar conta
+  * Adicionado alertas de confirmação de conta atualizada e conta deletada
 
 ## Autor
 
