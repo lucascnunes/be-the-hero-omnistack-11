@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 // carrega o icone da Power e o trash2 do pacote feather icons
-import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { FiPower, FiEdit, FiTrash2 } from 'react-icons/fi';
 
 // carrega a api
 import api from '../../services/api';
@@ -68,7 +68,6 @@ export default function Profile() {
         
         // soma 1 a pagina atual
         setPage(page+1);
-
         // define loading falso
         setLoading(false);
     }
@@ -87,6 +86,8 @@ export default function Profile() {
             setIncidents(response.data);
             // define o total tirando do cabeçalho da resposta o x-total-count
             setTotal(response.headers['x-total-count']);
+            // soma 1 página atual
+            setPage(page+1);
         });
     }, [ongKey]);
 
@@ -129,6 +130,9 @@ export default function Profile() {
                 <Link className="button" to="/incidents/new">
                     Cadastrar novo caso
                 </Link>
+                <button onClick={() => history.push('/account')} type="button">
+                    <FiEdit size={18} color="#E02041" />
+                </button>
                 <button type="button" onClick={handleLogout}>
                     <FiPower size={18} color="#E02041" />
                 </button>
@@ -156,8 +160,8 @@ export default function Profile() {
 
                                     <button 
                                         type="button"
-                                        // chama a função handleDeleteIncident passando o id do incident
-                                        onClick={() => handleDeleteIncident(incident.id)}
+                                        // emite um alerta(confirm) e chama a função handleDeleteIncident passando o id do incident caso o usuário confirme
+                                        onClick={(e) => { if (window.confirm('Tem certeza que quer apagar este caso?')) handleDeleteIncident(incident.id) }}
                                     >
                                         <FiTrash2 size={20} color="#a8a8b3" />
                                     </button>
