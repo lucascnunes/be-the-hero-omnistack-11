@@ -1,27 +1,41 @@
 import React, { useEffect } from 'react';
-import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ScrollView, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+
+// carrega tudo do pacote expo-mail-composer como MailComposer
 import * as MailComposer from 'expo-mail-composer';
 
-import api from '../../services/api';
+// carrega o feather icons
+import { Feather } from '@expo/vector-icons';
 
-import logoImg from '../../assets/logo.png';
-
+// importa o styles local
 import styles from './styles';
 
+// carrega o logo da pasta assets
+import logoImg from '../../assets/logo.png';
+
 export default function Incidents() {
+    // define route com as informações da rota
     const route = useRoute();
+
+    // define o incident com os parametros da rota chamado incident
+    const incident = route.params.incident;
+
+    // instancia o navigation
     const navigation = useNavigation();
 
-    const incident = route.params.incident;
+    // define a mensagem a ser enviada pelo email e whatsapp
     const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}`;
 
+    // define a função navigateBack()
     function navigateBack() {
+        // executa o navigation função goBack() para retornar a tela anterior
         navigation.goBack();
     }
 
+    // define a função sendMail para enviar um email
     function sendMail() {
+        // chama o composeAsync do MailComposer para enviar um e-mail
         MailComposer.composeAsync({
             subject: `Herói do caso: ${incident.title}`,
             recipients: ['hero@bethehero.com.br'],
@@ -29,10 +43,13 @@ export default function Incidents() {
         });
     }
 
+    // define a função sendWhatsapp para abrir o aplicativo dentro do celular
     function sendWhatsapp() {
+        // utiliza o Linking para abrir o aplicativo passando os parametros de phone e text com o numero do whatsapp da ong do incident e da mensagem
         Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
     }
     
+    // exibe o jsx abaixo
     return (
         <View style={styles.container}>
             <View style={styles.header}>
