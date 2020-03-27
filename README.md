@@ -54,6 +54,8 @@ Para visualização da aplicação mobile utilize o celular com o aplicativo *Ex
 
 Adicionei algumas mudanças pessoais ao código então o mesmo não se encontra fiel as aulas, seguem abaixo:
 
+* Banco de dados mantive o campo **id** do SQL intacto e adicioneu um campo **key** para ser usado como identificado das ONGs
+
 * Adicionei uma janela de confirmação de cadastro de nova ONG no *frontend*.
 ```
 RegisterSuccess
