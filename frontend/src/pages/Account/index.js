@@ -114,7 +114,7 @@ export default function Account() {
 
     // bloco de declaração try, se funcionar:
     try {
-      // envia os states atualizados com metodo delete para a rota 'ongs' do backend
+      // envia metodo delete para a rota 'ongs' do backend
       const response = await api.delete('ongs', {
         headers: {
           // envia a ongKey para o backend pelo cabeçalho da requisição
