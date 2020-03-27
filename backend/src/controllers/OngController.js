@@ -23,5 +23,32 @@ module.exports = {
         });
 
         return response.json({ key });
+    },
+
+    async delete(request, response) {
+        
+        const ong_key = request.headers.authorization;
+        
+        const ong = await connection('ongs')
+        .where('key', ong_key)
+        .first();
+
+        if (!ong) {
+            return response.status(401).json({
+                error: 'Not authorized.'
+            });
+        }
+
+        const ongDelete = await connection('ongs')
+            .where('id', ong.id)
+            .delete();
+
+        if (!ongDelete) {
+            return response.status(500).json({
+                error: 'Error while DELETING.'
+            });
+        }
+
+        return response.status(204).send();
     }
 }
