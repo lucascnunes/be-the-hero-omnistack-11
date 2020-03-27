@@ -48,17 +48,14 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        function loadData() {
-            api.get('profile', {
-                headers: {
-                    'Authorization': ongKey
-                }
-            }).then(response => {
-                setIncidents(response.data);
-                setTotal(response.headers['x-total-count']);
-            });
-        }
-        loadData();
+        api.get('profile', {
+            headers: {
+                'Authorization': ongKey
+            }
+        }).then(response => {
+            setIncidents(response.data);
+            setTotal(response.headers['x-total-count']);
+        });
     }, [ongKey]);
 
     async function handleDeleteIncident(id) {
