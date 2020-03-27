@@ -57,6 +57,28 @@ module.exports = {
         return response.json({ id });
     },
 
+    async show(request, response) {
+        const { id } = request.params;
+        const ongs_key = request.headers.authorization;
+        const ongs_id = await connection('ongs')
+            .select('id')
+            .where('key', ongs_key)
+            .first();
+
+        if (!ongs_id) {
+            return response.status(401).json({
+                error: 'Not authorized.'
+            });
+        }
+
+        const incident = await connection('incidents')
+            .where('id', id)
+            .select('ongs_id')
+            .first();
+
+        return response.json(incident);
+    },
+
     async delete(request, response) {
         const { id } = request.params;
         const ongs_key = request.headers.authorization;
