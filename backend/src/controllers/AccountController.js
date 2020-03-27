@@ -6,15 +6,15 @@ module.exports = {
         const ong_key = request.headers.authorization;
         
         const ong = await connection('ongs')
-        .select([
-            'name',
-            'email',
-            'whatsapp',
-            'city',
-            'uf',
-        ])
-        .where('key', ong_key)
-        .first();
+            .select([
+                'name',
+                'email',
+                'whatsapp',
+                'city',
+                'uf',
+            ])
+            .where('key', ong_key)
+            .first();
 
         if (!ong) {
             return response.status(401).json({
@@ -32,9 +32,9 @@ module.exports = {
         const ong_key = request.headers.authorization;
         
         const ong = await connection('ongs')
-        .select('id')
-        .where('key', ong_key)
-        .first();
+            .select('id')
+            .where('key', ong_key)
+            .first();
 
         if (!ong) {
             return response.status(401).json({
@@ -42,26 +42,28 @@ module.exports = {
             });
         }
 
-        const update = await connection('ongs')
-        .where('key', ong_key)
-        .update({
-            name,
-            email,
-            whatsapp,
-            city,
-            uf
-        });
-
-        if (!update) {
+        
+        try {
+            await connection('ongs')
+                .where('key', ong_key)
+                .update({
+                    name,
+                    email,
+                    whatsapp,
+                    city,
+                    uf
+                });
+        } catch (error) {
             return response.status(500).json({
-                error: 'Error while UPDATING.'
+                error: 'Error while UPDATING.',
+                message: error,
             });
         }
 
         const ongUpdated = await connection('ongs')
-        .select('name')
-        .where('key', ong_key)
-        .first();
+            .select('name')
+            .where('key', ong_key)
+            .first();
 
         return response.json(ongUpdated.name);
     }

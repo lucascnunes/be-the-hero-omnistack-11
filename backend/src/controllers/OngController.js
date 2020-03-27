@@ -39,13 +39,14 @@ module.exports = {
             });
         }
 
-        const ongDelete = await connection('ongs')
-            .where('id', ong.id)
-            .delete();
-
-        if (!ongDelete) {
+        try {
+            await connection('ongs')
+                .where('id', ong.id)
+                .delete();
+        } catch (error) {
             return response.status(500).json({
-                error: 'Error while DELETING.'
+                error: 'Error while DELETING.',
+                message: error,
             });
         }
 
