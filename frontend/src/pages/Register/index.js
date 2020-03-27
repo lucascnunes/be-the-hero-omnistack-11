@@ -109,6 +109,8 @@ export default function Register() {
               placeholder="Whatsapp"
               value={whatsapp} 
               required
+              minLength={10}
+              maxLength={11}
               onChange={e => setWhatsapp(e.target.value)}
             />
             <div className="input-group">
@@ -117,14 +119,19 @@ export default function Register() {
                 value={city}
                 required
                 onChange={e => setCity(e.target.value)}
+                style={{
+                  textTransform: 'capitalize'
+                }}
               />
               <input
                 value={uf}
                 placeholder="UF"
                 onChange={e => setUf(e.target.value)}
                 required
+                maxLength={2}
                 style={{
-                    width: 80
+                    width: 80,
+                    textTransform: 'uppercase'
                   }}
               />
             </div>
