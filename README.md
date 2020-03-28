@@ -76,6 +76,7 @@ Account
 ```
 EditIncident
 ```
+  * Adicionei os **testes** ao backend 📌 **desatualizado**, falta atualizar após as alterações para **jwt**
   * Removi o campo **KEY** da tabela **ongs**
   * Adicionei os timestamps **created_at** e **updated_at** às tabelas **ongs** e **incidents**
   * Adicionado autenticação com **JWT**
