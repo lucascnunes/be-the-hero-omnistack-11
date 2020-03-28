@@ -27,6 +27,15 @@ export default function Logon() {
   // instancia o history
   const history = useHistory();
 
+  // instancia token do localstorage
+  const token = localStorage.getItem('ongToken');
+
+  // se houver um token definido
+  if(token) {
+    // empurra o usuario para o profile
+    history.push('/profile');
+  }
+
   // define a função handleLogin
   async function handleLogin(e) {
     // previne o funcionamento normal do envio do formulário
