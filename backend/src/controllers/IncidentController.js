@@ -73,10 +73,44 @@ module.exports = {
 
         const incident = await connection('incidents')
             .where('id', id)
-            .select('ongs_id')
+            .select('*')
             .first();
 
         return response.json(incident);
+    },
+
+    async update(request, response) {
+        const { id } = request.params;
+        const { title, description, value } = request.body;
+        const ongs_key = request.headers.authorization;
+        
+        const ong = await connection('ongs')
+            .select('id')
+            .where('key', ongs_key)
+            .first();
+
+        if (!ong) {
+            return response.status(401).json({
+                error: 'Not authorized.'
+            });
+        }
+
+        const ongs_id = await connection('ongs')
+            .select('id')
+            .where('key', ongs_key)
+            .first();
+
+        const ongUpdated = await connection('incidents')
+            .where('ongs_id', ongs_id.id)
+            .where('id', id)
+            .update({
+                title,
+                description,
+                value,
+                ongs_id: ongs_id.id
+            });
+
+        return response.json(ongUpdated);
     },
 
     async delete(request, response) {

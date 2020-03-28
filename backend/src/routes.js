@@ -6,7 +6,6 @@ const SessionController = require('./controllers/SessionController');
 const OngController = require('./controllers/OngController');
 const ProfileController = require('./controllers/ProfileController');
 const IncidentController = require('./controllers/IncidentController');
-const AccountController = require('./controllers/AccountController');
 
 // instanciando as validações
 const sessionValidation = require('./validations/Session/SessionValidation');
@@ -28,17 +27,18 @@ routes.get('/ongs', OngController.index);
 routes.post('/ongs', celebrate(createOngValidation), OngController.create);
 routes.delete('/ongs', celebrate(deleteOngValidation), OngController.delete);
 
+// Rota de conta da ONG
+routes.get('/account', celebrate(accountValidation), OngController.show);
+routes.put('/account', celebrate(updateAccountValidation), OngController.update);
+
 // Rota Profile
 routes.get('/profile', celebrate(profileValidation), ProfileController.index);
-
-// Rota de conta
-routes.get('/account', celebrate(accountValidation), AccountController.index);
-routes.put('/account', celebrate(updateAccountValidation), AccountController.update);
 
 // Rotas de incidents
 routes.get('/incidents', celebrate(incidentsValidation), IncidentController.index);
 routes.post('/incidents', IncidentController.create);
 routes.get('/incidents/:id', IncidentController.show);
+routes.put('/incidents/:id', IncidentController.update);
 routes.delete('/incidents/:id', celebrate(deleteIncidentValidation), IncidentController.delete);
 
 module.exports = routes;

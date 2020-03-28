@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 // carrega o icone da Power e o trash2 do pacote feather icons
-import { FiPower, FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiPower, FiEdit, FiTrash2, FiSettings } from 'react-icons/fi';
 
 // carrega a api
 import api from '../../services/api';
@@ -73,16 +73,18 @@ export default function Profile() {
         setLoading(false);
     
     }
-    
+    let showUpdatedAlert = false;
     if (history.location.state && history.location.state.updated) {
-        setShowUpdateAlert(true);
-        setTimeout(() => {
-            setShowUpdateAlert(false);
-        }, 5000);
+        showUpdatedAlert = true;
+    } else {
+        showUpdatedAlert = false;
     }
 
     // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o ongKey mudar
     useEffect(() => {
+        if (showUpdatedAlert) {
+            setShowUpdateAlert(true);
+        }
         // faz um pedido GET para a rota do backend 'profile'
         api.get('profile', {
             headers: {
@@ -98,7 +100,7 @@ export default function Profile() {
             // carrega a primeira pagina e já coloca a segunda
             setPage(2);
         });
-    }, [ongKey]);
+    }, [ongKey, showUpdatedAlert]);
 
     // define a função handleDeleteIncident
     async function handleDeleteIncident(id) {
@@ -121,6 +123,12 @@ export default function Profile() {
         }
     }
 
+    function handleEditIncident(incident) {
+        history.push('/incidents', {
+            id: incident.id
+        });
+    }
+
     // define a função handleLogout
     function handleLogout() {
         // apaga todo o localStorage do navegador
@@ -140,7 +148,7 @@ export default function Profile() {
                     Cadastrar novo caso
                 </Link>
                 <button onClick={() => history.push('/account')} type="button">
-                    <FiEdit size={18} color="#E02041" />
+                    <FiSettings size={18} color="#E02041" />
                 </button>
                 <button type="button" onClick={handleLogout}>
                     <FiPower size={18} color="#E02041" />
@@ -174,7 +182,16 @@ export default function Profile() {
 
                                     <span className="caso-titulo">Valor:</span>
                                     <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-
+                                    <button 
+                                        type="button"
+                                        // emite um alerta(confirm) e chama a função handleDeleteIncident passando o id do incident caso o usuário confirme
+                                        onClick={() => handleEditIncident(incident)}
+                                        style={{
+                                            right: 60
+                                        }}
+                                    >
+                                        <FiEdit size={20} color="#a8a8b3" />
+                                    </button>
                                     <button 
                                         type="button"
                                         // emite um alerta(confirm) e chama a função handleDeleteIncident passando o id do incident caso o usuário confirme
@@ -193,7 +210,7 @@ export default function Profile() {
                                 type="button"
                                 className="button"
                                 // chama a função loadIncidents para carregar mais incidents
-                                onClick={loadIncidents}
+                                onClick={() => loadIncidents}
                                 >
                                     Carregar mais
                                 </button>

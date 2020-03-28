@@ -97,8 +97,6 @@ export default function Account() {
 
     // se der erro
     } catch (error) {
-      // libera o uso do botão novamente
-      btnSave.current.removeAttribute('disabled');
       // envia alerta de erro ao navegador
       alert('Não conseguimos atualizar suas informações, tente novamente.');
     }
@@ -133,12 +131,9 @@ export default function Account() {
 
     // se der erro
     } catch (error) {
-      // libera o uso do botão novamente
-      btnDelete.current.removeAttribute('disabled');
       // envia alerta de erro ao navegador
       alert('Não conseguimos atualizar suas informações, tente novamente.');
     }
-
   }
   
   // exibe o jsx
@@ -155,6 +150,7 @@ export default function Account() {
         </section>
         <form onSubmit={handleUpdate}>
           <input
+            type="text"
             placeholder="Nome da ONG"
             value={name}
             required
@@ -177,7 +173,8 @@ export default function Account() {
             onChange={e => setWhatsapp(e.target.value)}
           />
           <div className="input-group">
-            <input 
+            <input
+              type="text"
               placeholder="Cidade" 
               value={city}
               required
@@ -187,6 +184,7 @@ export default function Account() {
               }}
             />
             <input
+              type="text"
               value={uf}
               placeholder="UF"
               onChange={e => setUf(e.target.value)}
