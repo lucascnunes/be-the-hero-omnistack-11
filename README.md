@@ -60,16 +60,22 @@ Adicionei algumas mudanças pessoais ao código então o mesmo não se encontra 
 ```
 RegisterSuccess
 ```
-  * Adicionei funções de refresh do FlatList no mobile para exibir o carregamento de novos casos:
+  * Adicionei funções de refresh do **FlatList** no mobile para exibir o carregamento de novos casos:
 ```
 onRefresh={loadIncidents}
 refreshing={loading}
 ```
-  * Adicionado paginação no perfil da ONG frontend.
-  * Adicionado tela de edição de ONG
-  * Adicionado botão de apagar conta
-  * Adicionado alertas de confirmação de conta atualizada e conta deletada
-  * Adicionado atualizar caso
+  * Adicionado **paginação** no perfil da ONG frontend.
+  * Adicionado página de **edição** de ONG
+```
+Account
+```
+  * Adicionado botão de **apagar conta** na página de edição da ONG
+  * Adicionado alertas de confirmação de conta atualizada na página de perfil e de conta apagada na página inicial
+  * Adicionado página para **atualizar** caso
+```
+EditIncident
+```
 
 ## Autor
 
