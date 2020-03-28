@@ -210,7 +210,7 @@ export default function Profile() {
                                 type="button"
                                 className="button"
                                 // chama a função loadIncidents para carregar mais incidents
-                                onClick={() => loadIncidents}
+                                onClick={loadIncidents}
                                 >
                                     Carregar mais
                                 </button>
