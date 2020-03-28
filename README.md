@@ -76,6 +76,8 @@ Account
 ```
 EditIncident
 ```
+  * Adicionado autenticação com **JWT**
+  * Adicionado **envio de e-mail** após o cadastro
 
 ## Autor
 
