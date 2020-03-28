@@ -18,11 +18,11 @@ export default function EditIncident() {
     // instancia o history
     const history = useHistory();
 
-    // pega a ongKey do localstorage
-    const ongKey = localStorage.getItem("ongKey");
+    // pega a token do localstorage
+    const token = localStorage.getItem("ongToken");
 
-    // Se não houver uma ongKEY salva no localStorage
-    if (!ongKey) {
+    // Se não houver uma token salva no localStorage
+    if (!token) {
         // envia o usuário para tela inicial
         history.push('/');
     }
@@ -47,8 +47,8 @@ export default function EditIncident() {
         // faz um pedido GET para a rota do backend 'profile'
         api.get(`incidents/${id}`, {
             headers: {
-                // envia a ongKey para o backend pelo cabeçalho da requisição
-                'Authorization': ongKey
+                // envia a token para o backend pelo cabeçalho da requisição
+                'Authorization': 'Bearer ' + token
             }
         })
         // se tiver uma resposta
@@ -58,7 +58,7 @@ export default function EditIncident() {
             setDescription(response.data.description);
             setValue(response.data.value);
         });
-    }, [ongKey, id]);
+    }, [token, id]);
     
     // define a função handleUpdateIncident
     async function handleUpdateIncident(e) {
@@ -80,8 +80,8 @@ export default function EditIncident() {
             // envia os dados do formulário como metodo post para a rota 'incidents' do backend
             await api.put(`incidents/${id}`, data, {
                 headers: {
-                    // envia a ongKey para o backend pelo cabeçalho da requisição
-                    'Authorization': ongKey
+                    // envia a token para o backend pelo cabeçalho da requisição
+                    'Authorization': 'Bearer ' + token
                 }
             });
             // direciona para página profile

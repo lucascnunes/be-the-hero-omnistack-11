@@ -1,5 +1,9 @@
+const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 const connection = require('../database/connection');
-const generateUniqueId = require('../utils/generateUniqueId');
+
+const config = require('../config');
 
 module.exports = {
     async index(request, response) {
@@ -9,20 +13,57 @@ module.exports = {
     },
     
     async create(request, response) {
-        const { name, email, whatsapp, city, uf } = request.body;
-    
-        const key = generateUniqueId();
+        const { name, email, whatsapp, city, uf, password } = request.body;
         
+        let ong = await connection('ongs')
+            .select(['name', 'password'])
+            .where('email', email)
+            .first();
+        
+        if(ong) {
+            return response.status(400).json({
+                error: 'This user already exist.'
+            });
+        }
+
+        const created_at = new Date().toISOString().slice(0, 19).replace('T', ' '); 
+        const updated_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
         await connection('ongs').insert({
-            key,
             name,
             email,
             whatsapp,
             city,
-            uf
+            uf,
+            created_at,
+            updated_at
         });
 
-        return response.json({ key });
+        bcrypt.hash(password, 10)
+        .then(async (hash) => {
+            await connection('ongs')
+                .where('email', email)
+                .update({
+                    password: hash
+                });
+        });
+
+        const token = jsonwebtoken.sign({
+            email: email,
+        }, config.token.secret, {
+            expiresIn: config.token.expired
+        })
+
+        ong = await connection('ongs')
+            .select(['name'])
+            .where('email', email)
+            .first();
+
+        return response.json({
+            email:  ong.email,
+            token:  token,
+            name:   ong.name
+        });
     },
 
     async show(request, response) {
@@ -37,7 +78,7 @@ module.exports = {
                 'city',
                 'uf',
             ])
-            .where('key', ong_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ong) {
@@ -53,11 +94,9 @@ module.exports = {
         
         const { name, email, whatsapp, city, uf } = request.body;
         
-        const ong_key = request.headers.authorization;
-        
         const ong = await connection('ongs')
             .select('id')
-            .where('key', ong_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ong) {
@@ -66,16 +105,18 @@ module.exports = {
             });
         }
 
-        
         try {
+            const updated_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
             await connection('ongs')
-                .where('key', ong_key)
+                .where('email', request.user.email)
                 .update({
                     name,
                     email,
                     whatsapp,
                     city,
-                    uf
+                    uf,
+                    updated_at
                 });
         } catch (error) {
             return response.status(400).json({
@@ -86,7 +127,7 @@ module.exports = {
 
         const ongUpdated = await connection('ongs')
             .select('name')
-            .where('key', ong_key)
+            .where('email', request.user.email)
             .first();
 
         return response.json(ongUpdated.name);
@@ -94,11 +135,9 @@ module.exports = {
 
     async delete(request, response) {
         
-        const ong_key = request.headers.authorization;
-        
         const ong = await connection('ongs')
-        .where('key', ong_key)
-        .first();
+            .where('email', request.user.email)
+            .first();
 
         if (!ong) {
             return response.status(401).json({

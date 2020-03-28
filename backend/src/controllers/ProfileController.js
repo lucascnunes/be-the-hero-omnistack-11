@@ -3,12 +3,8 @@ const connection = require('../database/connection');
 module.exports = {
     async index(request, response) {
         const { page = 1 } = request.query;
-
-        const ong_key = request.headers.authorization;
-        
         const ong = await connection('ongs')
-            .select('id')
-            .where('key', ong_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ong) {

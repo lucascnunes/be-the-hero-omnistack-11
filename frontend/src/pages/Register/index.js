@@ -26,7 +26,7 @@ export default function Register() {
   const [whatsapp, setWhatsapp] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
-  const [ong_key, setOngKey] = useState("");
+  const [password, setPassword] = useState("");
 
   // instancia o btnRegister como uma referencia
   const btnRegister = useRef();
@@ -46,21 +46,22 @@ export default function Register() {
       whatsapp,
       city,
       uf,
+      password
     };
 
     // bloco de declaração try, se funcionar:
     try {
       // envia os dados do formulário como metodo post para a rota 'ongs' do backend
       const response = await api.post('ongs', data);
-      // define o state ongsKey com a KEY vinda da resposta do api.post acima
-      setOngKey(response.data.key);
+      // salva o token no localstorage
+      localStorage.setItem('ongToken', response.data.token);
+      // salva o email no localstorage
+      localStorage.setItem('ongEmail', email);
       // define o state successRegistration como verdadeiro
       setSuccessRegistration(true);
 
     // se der erro
     } catch (error) {
-      // libera o uso do botão novamente
-      btnRegister.current.removeAttribute('disabled');
       // define o state successRegistration como falso
       setSuccessRegistration(false);
       // envia alerta de erro ao navegador
@@ -73,7 +74,7 @@ export default function Register() {
     // exibe este jsx com a página RegisterSuccess com um children da ong_key
     return (
       <RegisterSuccess>
-        {ong_key}
+        {email}
       </RegisterSuccess>
     );
     
@@ -135,6 +136,13 @@ export default function Register() {
                   }}
               />
             </div>
+            <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            placeholder='Sua senha'
+          />
             <button ref={btnRegister} className="button" type="submit">
               Cadastrar
             </button>

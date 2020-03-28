@@ -18,11 +18,11 @@ export default function Account() {
   // instancia o history
   const history = useHistory();
 
-  // pega a ongKey do localstorage
-  const ongKey = localStorage.getItem("ongKey");
+  // pega a token do localstorage
+  const token = localStorage.getItem("ongToken");
 
-  // Se não houver uma ongKEY salva no localStorage
-  if (!ongKey) {
+  // Se não houver uma token salva no localStorage
+  if (!token) {
     // envia o usuário para tela inicial
     history.push('/');
   }
@@ -40,14 +40,14 @@ export default function Account() {
   // instancia o btnDelete como uma referencia
   const btnDelete = useRef();
 
-  // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o ongKey mudar
+  // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o token mudar
   useEffect(() => {
     // faz um pedido GET para a rota do backend 'profile'
     api.get('account', {
         headers: {
-            // envia a ongKey para o backend pelo cabeçalho da requisição
-            'Authorization': ongKey
-        }
+            // envia a token para o backend pelo cabeçalho da requisição
+            'Authorization': 'Bearer ' + token
+          }
         // se tiver uma resposta
     }).then(response => {
         // define os incidents com o data da resposta
@@ -57,7 +57,7 @@ export default function Account() {
         setCity(response.data.city);
         setUf(response.data.uf);
     });
-  }, [ongKey]);
+  }, [token]);
 
   // define a função handleUpdate
   async function handleUpdate(e) {
@@ -81,8 +81,8 @@ export default function Account() {
       // envia os states atualizados com metodo put para a rota 'account' do backend
       const response = await api.put('account', data, {
         headers: {
-          // envia a ongKey para o backend pelo cabeçalho da requisição
-          'Authorization': ongKey,
+          // envia a token para o backend pelo cabeçalho da requisição
+          'Authorization': 'Bearer ' + token,
         }
       });
 
@@ -115,8 +115,8 @@ export default function Account() {
       // envia metodo delete para a rota 'ongs' do backend
       await api.delete('ongs', {
         headers: {
-          // envia a ongKey para o backend pelo cabeçalho da requisição
-          'Authorization': ongKey,
+          // envia a token para o backend pelo cabeçalho da requisição
+          'Authorization': 'Bearer ' + token,
         }
       });
 

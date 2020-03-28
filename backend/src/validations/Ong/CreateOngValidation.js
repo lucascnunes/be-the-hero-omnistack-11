@@ -7,6 +7,7 @@ const createOngValidation = {
         whatsapp: Joi.string().required().min(10).max(11),
         city: Joi.string().required(),
         uf: Joi.string().length(2),
+        password: Joi.string().min(6),
     })
 };
 

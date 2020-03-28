@@ -17,23 +17,15 @@ import heroesImg from "../../assets/heroes.png";
 
 export default function Logon() {
 
-  // define o state key
-  const [key, setKey] = useState("");
+  // define os states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   
   // define o state
   const [deleteAlert, setShowDeleteAlert] = useState(false);
   
   // instancia o history
   const history = useHistory();
-
-  // pega a ongKey do localstorage
-  const ongKey = localStorage.getItem('ongKey');
-  
-  // Se houver uma ongKEY salva no localStorage
-  if (ongKey) {
-    // envia o usuário para tela de profile
-    history.push('/profile');
-  }
 
   // define a função handleLogin
   async function handleLogin(e) {
@@ -42,12 +34,14 @@ export default function Logon() {
 
     // bloco de declaração try, se funcionar:
     try {
-      const response = await api.post('sessions', { key })
-
-      // guarda no localStorage a ongKey
-      localStorage.setItem('ongKey', key);
+      const response = await api.post('sessions', { email, password });
+      
+      // guarda no localStorage a token JWT
+      localStorage.setItem('ongToken', response.data.token);
+      // guarda no localStorage o email
+      localStorage.setItem('ongEmail', email);
       // guarda no localStorage a ongName
-      localStorage.setItem('ongName', response.data);
+      localStorage.setItem('ongName', response.data.name);
 
       // direciona para página profile
       history.push('/profile');
@@ -76,10 +70,18 @@ export default function Logon() {
         <form onSubmit={handleLogin}>
           <h1> Faça seu logon </h1>
           <input
-            value={key}
-            onChange={e => setKey(e.target.value)}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
-            placeholder='Sua KEY'
+            placeholder='Seu e-mail'
+          />
+          <input
+            style={{ marginTop: 10 }}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            placeholder='Sua senha'
           />
           <button className='button' type='submit'>
             Entrar

@@ -18,11 +18,11 @@ export default function NewIncident() {
     // instancia o history
     const history = useHistory();
 
-    // pega a ongKey do localstorage
-    const ongKey = localStorage.getItem("ongKey");
+    // pega a ongToken do localstorage
+    const token = localStorage.getItem("ongToken");
 
-    // Se não houver uma ongKEY salva no localStorage
-    if (!ongKey) {
+    // Se não houver uma ongToken salva no localStorage
+    if (!token) {
         // envia o usuário para tela inicial
         history.push('/');
     }
@@ -55,8 +55,8 @@ export default function NewIncident() {
             // envia os dados do formulário como metodo post para a rota 'incidents' do backend
             await api.post('incidents', data, {
                 headers: {
-                    // envia a ongKey para o backend pelo cabeçalho da requisição
-                    'Authorization': ongKey
+                    // envia a token para o backend pelo cabeçalho da requisição
+                    'Authorization': 'Bearer ' + token
                 }
             });
             // direciona para página profile

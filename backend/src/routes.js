@@ -1,5 +1,8 @@
 const express = require('express');
-const { celebrate, Segments, Joi } = require('celebrate');
+const jwt = require('express-jwt');
+const { celebrate } = require('celebrate');
+
+const config = require('./config');
 
 // instanciando os controladores
 const SessionController = require('./controllers/SessionController');
@@ -25,20 +28,20 @@ routes.post('/sessions', celebrate(sessionValidation), SessionController.create)
 // Rotas de ONGs
 routes.get('/ongs', OngController.index);
 routes.post('/ongs', celebrate(createOngValidation), OngController.create);
-routes.delete('/ongs', celebrate(deleteOngValidation), OngController.delete);
+routes.delete('/ongs', jwt({secret:config.token.secret}), celebrate(deleteOngValidation), OngController.delete);
 
 // Rota de conta da ONG
-routes.get('/account', celebrate(accountValidation), OngController.show);
-routes.put('/account', celebrate(updateAccountValidation), OngController.update);
+routes.get('/account', jwt({secret:config.token.secret}), celebrate(accountValidation), OngController.show);
+routes.put('/account', jwt({secret:config.token.secret}), celebrate(updateAccountValidation), OngController.update);
 
 // Rota Profile
-routes.get('/profile', celebrate(profileValidation), ProfileController.index);
+routes.get('/profile', jwt({secret:config.token.secret}), celebrate(profileValidation), ProfileController.index);
 
 // Rotas de incidents
 routes.get('/incidents', celebrate(incidentsValidation), IncidentController.index);
-routes.post('/incidents', IncidentController.create);
-routes.get('/incidents/:id', IncidentController.show);
-routes.put('/incidents/:id', IncidentController.update);
-routes.delete('/incidents/:id', celebrate(deleteIncidentValidation), IncidentController.delete);
+routes.post('/incidents', jwt({secret:config.token.secret}), IncidentController.create);
+routes.get('/incidents/:id', jwt({secret:config.token.secret}), IncidentController.show);
+routes.put('/incidents/:id', jwt({secret:config.token.secret}), IncidentController.update);
+routes.delete('/incidents/:id', jwt({secret:config.token.secret}), celebrate(deleteIncidentValidation), IncidentController.delete);
 
 module.exports = routes;

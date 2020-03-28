@@ -16,7 +16,6 @@ module.exports = {
                 'ongs.whatsapp',
                 'ongs.city',
                 'ongs.uf',
-                'ongs.key'
             ])
             .limit(5)
             .offset((page - 1) * 5);
@@ -28,11 +27,10 @@ module.exports = {
 
     async create(request, response) {
         const { title, description, value } = request.body;
-        const ongs_key = request.headers.authorization;
         
         const ong = await connection('ongs')
             .select('id')
-            .where('key', ongs_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ong) {
@@ -41,17 +39,12 @@ module.exports = {
             });
         }
 
-        const ongs_id = await connection('ongs')
-            .select('id')
-            .where('key', ongs_key)
-            .first();
-
         const [id] = await connection('incidents')
             .insert({
                 title,
                 description,
                 value,
-                ongs_id: ongs_id.id
+                ongs_id: ong.id
             });
 
         return response.json({ id });
@@ -59,10 +52,10 @@ module.exports = {
 
     async show(request, response) {
         const { id } = request.params;
-        const ongs_key = request.headers.authorization;
+
         const ongs_id = await connection('ongs')
             .select('id')
-            .where('key', ongs_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ongs_id) {
@@ -82,11 +75,10 @@ module.exports = {
     async update(request, response) {
         const { id } = request.params;
         const { title, description, value } = request.body;
-        const ongs_key = request.headers.authorization;
         
         const ong = await connection('ongs')
             .select('id')
-            .where('key', ongs_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ong) {
@@ -95,19 +87,13 @@ module.exports = {
             });
         }
 
-        const ongs_id = await connection('ongs')
-            .select('id')
-            .where('key', ongs_key)
-            .first();
-
         const ongUpdated = await connection('incidents')
-            .where('ongs_id', ongs_id.id)
+            .where('ongs_id', ong.id)
             .where('id', id)
             .update({
                 title,
                 description,
                 value,
-                ongs_id: ongs_id.id
             });
 
         return response.json(ongUpdated);
@@ -115,10 +101,10 @@ module.exports = {
 
     async delete(request, response) {
         const { id } = request.params;
-        const ongs_key = request.headers.authorization;
+
         const ongs_id = await connection('ongs')
             .select('id')
-            .where('key', ongs_key)
+            .where('email', request.user.email)
             .first();
 
         if (!ongs_id) {

@@ -19,14 +19,12 @@ export default function Profile() {
     const history = useHistory();
 
     // pega a ongKey do localstorage
-    const ongKey = localStorage.getItem("ongKey");
+    const token = localStorage.getItem("ongToken");
 
-    // Se não houver uma ongKEY salva no localStorage
-    if (!ongKey) {
-        // envia o usuário para tela inicial
+    if (!token) {
         history.push('/');
     }
-    
+
     // define os states
     const [incidents, setIncidents] = useState([]);
     const [total, setTotal] = useState(0);
@@ -55,7 +53,7 @@ export default function Profile() {
         const response = await api.get('profile', {
             headers: {
                 // envia a ongKey para o backend pelo cabeçalho da requisição
-                'Authorization': ongKey
+                'Authorization': 'Bearer ' + token
             },
             // define um params no pedido get chamado page com o valor da pagina atual
             params: { page }
@@ -73,7 +71,9 @@ export default function Profile() {
         setLoading(false);
     
     }
+    
     let showUpdatedAlert = false;
+
     if (history.location.state && history.location.state.updated) {
         showUpdatedAlert = true;
     } else {
@@ -89,7 +89,7 @@ export default function Profile() {
         api.get('profile', {
             headers: {
                 // envia a ongKey para o backend pelo cabeçalho da requisição
-                'Authorization': ongKey
+                'Authorization': 'Bearer ' + token
             }
             // se tiver uma resposta
         }).then(response => {
@@ -100,7 +100,7 @@ export default function Profile() {
             // carrega a primeira pagina e já coloca a segunda
             setPage(2);
         });
-    }, [ongKey, showUpdatedAlert]);
+    }, [token, showUpdatedAlert]);
 
     // define a função handleDeleteIncident
     async function handleDeleteIncident(id) {
@@ -110,7 +110,7 @@ export default function Profile() {
             await api.delete(`/incidents/${id}`, {
               headers: {
                 // envia a ongKey para o backend pelo cabeçalho da requisição
-                  'Authorization': ongKey
+                  'Authorization': 'Bearer ' + token
               }  
             });
             // filtra e remove dos incidents o incident que tiver o mesmo id do incident apagado
@@ -142,7 +142,7 @@ export default function Profile() {
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Be The Hero"/>
-                <span>Bem vinda, {localStorage.getItem('ongName')} <span className="key">KEY: <strong>{ongKey}</strong></span></span>
+                <span>Bem vinda, {localStorage.getItem('ongName')}</span>
 
                 <Link className="button" to="/incidents/new">
                     Cadastrar novo caso
@@ -204,7 +204,7 @@ export default function Profile() {
                         </ul>
                         {
                         // o total de incidents é maior que 0 e o numero de incidents exibidos é menor que o total ?
-                        (total > 0 && incidents.length < total) ? // se sim mostre o jsx abaixo
+                        (total > 0 && incidents.length + 1 < total) ? // se sim mostre o jsx abaixo
                             <div className="align-center">
                                 <button
                                 type="button"
