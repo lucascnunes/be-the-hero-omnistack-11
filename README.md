@@ -76,6 +76,8 @@ Account
 ```
 EditIncident
 ```
+  * Removi o campo **KEY** da tabela **ongs**
+  * Adicionei os timestamps **created_at** e **updated_at** às tabelas **ongs** e **incidents**
   * Adicionado autenticação com **JWT**
   * Adicionado **envio de e-mail** após o cadastro
 
