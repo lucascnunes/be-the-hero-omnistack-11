@@ -1,5 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const nodemailer = require("nodemailer");
 
 const connection = require('../database/connection');
 
@@ -55,9 +56,28 @@ module.exports = {
         })
 
         ong = await connection('ongs')
-            .select(['name'])
+            .select(['name', 'email'])
             .where('email', email)
             .first();
+
+        // definindo as informações do smtp
+        let transporter = nodemailer.createTransport({
+            host: config.smtp.host,
+            port: config.smtp.port,
+            secure: config.smtp.secure, // true for 465, false for other ports
+            auth: {
+              user: config.smtp.auth.user, // generated ethereal user
+              pass: config.smtp.auth.password // generated ethereal password
+            }
+        });
+
+        // envia o email
+        await transporter.sendMail({
+            from: '"Be The Hero 💪" <hero@bethehero.com>', // sender address
+            to: ong.email, // list of receivers
+            subject: "Vamos encontrar heróis juntos ✔", // Subject line
+            text: `Seja bem vindo ${ong.name}, utilize nossa plataforma para adicionar seus casos e encontrar heróis que ajudaram sua organização.`, // plain text body
+        });
 
         return response.json({
             email:  ong.email,

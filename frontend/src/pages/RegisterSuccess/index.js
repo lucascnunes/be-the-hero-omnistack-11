@@ -19,8 +19,8 @@ export default function RegisterSuccess({ children }) {
         <section>
           <img src={logoImg} alt="Be The Hero" />
           <h1> Cadastro realizado com sucesso! </h1>
-          <p>Enviamos um e-mail para você confirmar seu cadastro: </p>
-          <a target="_blank" href={ 'http://'+children.split('@')[1] } style={{
+          <p>Seja bem vindo ao Be The Hero!! Confira seu e-mail enviamos uma confirmação:</p>
+          <a rel="noopener noreferrer" target="_blank" href={ 'http://'+children.split('@')[1] } style={{
               background: "#fff",
               padding: 20,
               textAlign: "center",
