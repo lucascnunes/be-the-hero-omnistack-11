@@ -104,7 +104,7 @@ export default function NewIncident() {
                         onChange={e => setDescription(e.target.value)}
                     />
                     <input 
-                        type="tel" 
+                        type="number" 
                         placeholder="Valor em reais"
                         value={value}
                         required
