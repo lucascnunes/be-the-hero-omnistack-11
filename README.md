@@ -95,6 +95,7 @@ EditIncident
 onRefresh={loadIncidents}
 refreshing={loading}
 ```
+  * Se não tiver nenhum caso para exibir fará requisição para listar casos a cada **6** segundos
 
 #### VueJS - Frontend
 
