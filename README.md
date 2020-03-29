@@ -50,7 +50,7 @@ npm start
 **Para o vue-frontend:**
 ```
 npm run serve
-``
+```
 
 **Para o mobile**
 ```
