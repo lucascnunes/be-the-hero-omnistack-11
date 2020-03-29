@@ -29,7 +29,7 @@ Clone o repositório, utilizando **git clone** ou faça o **download** do reposi
 
 Após clonar ou baixar o repositório instale as dependências necessárias:
 
-Utilize o **npm** para instalar as dependências nas pastas *backend*, *frontend*, *mobile*.
+Utilize o **npm** para instalar as dependências nas pastas *backend*, *react-frontend*, *vue-frontend*, *mobile*.
 
 ```
 npm install
@@ -42,10 +42,15 @@ npx knex migrate:latest
 
 Após a geração do banco de dados e das migrações você poderá rodar o backend, frontend e mobile utilizando
 
-**Para o backend e frontend:**
+**Para o backend e react-frontend:**
 ```
 npm start
 ```
+
+**Para o vue-frontend:**
+```
+npm run serve
+``
 
 **Para o mobile**
 ```
