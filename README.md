@@ -1,4 +1,6 @@
+<p style="text-align:center">
 <img align="center" src="https://github.com/lucascnunes/be-the-hero-omnistack-11/blob/master/react-frontend/src/assets/logo.svg">
+</p>
 
 ![Be The Hero](https://github.com/lucascnunes/be-the-hero-omnistack-11/blob/master/screenshots/frontend/inicial%20atual/screen1.png)
 
