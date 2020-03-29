@@ -1,3 +1,6 @@
+<img align="center" src="https://github.com/lucascnunes/be-the-hero-omnistack-11/blob/master/react-frontend/src/assets/logo.svg">
+
+![Be The Hero](https://github.com/lucascnunes/be-the-hero-omnistack-11/blob/master/screenshots/frontend/inicial%20atual/screen1.png)
 
 # Be The Hero - Semana OmniStack 11
 
