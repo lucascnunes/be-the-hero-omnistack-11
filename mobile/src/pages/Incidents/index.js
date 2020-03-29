@@ -70,7 +70,15 @@ export default function Incidents() {
     useEffect(() => {
         // chama a função loadIncidents()
         loadIncidents();
-    }, []);
+
+        // se não houver incidents para exibir
+        if (incidents.length === 0) {
+            // tente carregar novos incidents a cada 5
+            setInterval(() => {
+                loadIncidents();
+            }, 6000);
+        }
+    }, [incidents]);
 
     // exibe o jsx abaixo
     return (
