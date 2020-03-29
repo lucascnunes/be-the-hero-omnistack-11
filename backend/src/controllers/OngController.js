@@ -49,12 +49,6 @@ module.exports = {
                     });
             });
 
-        const token = jsonwebtoken.sign({
-            email: email,
-        }, config.token.secret, {
-            expiresIn: config.token.expired
-        })
-
         ong = await connection('ongs')
             .select(['name', 'email'])
             .where('email', email)
@@ -87,7 +81,23 @@ module.exports = {
             });
         }
 
+        const token = jsonwebtoken.sign({
+            email: email,
+        }, config.token.secret, {
+            expiresIn: config.token.expired
+        })
+
+        response.cookie('access_token', token, {
+            maxAge: 86400000,
+            httpOnly: true,
+            expires: false,
+            // secure: true // somente para produção
+        });
+
+        let date = new Date();
+        
         return response.json({
+            expire_at: date.setDate(date.getDate() + 1),
             email:  ong.email,
             token:  token,
             name:   ong.name
