@@ -84,63 +84,71 @@ export default function Incidents() {
             <Text style={styles.title}>Bem vindo!</Text>
             <Text style={styles.description}>Escolha um dos casos abaixo e salve o dia.</Text>
 
-            <FlatList
-                style={styles.incidentList}
-                // define o conteudo da lista com os 'incidents'
-                data={incidents}
-                // define uma chave unica para cada incident usando o ID do mesmo
-                keyExtractor={incident => String(incident.id)}
-                // esconde a barra vertical da lista
-                showsVerticalScrollIndicator={false}
-                // chama o loadIncidents caso o usuario arraste a lista para baixo tentando atualizar a lista
-                onRefresh={loadIncidents}
-                // passa o loading se está carregando(true) ou não(false)
-                refreshing={loading}
-                // ao chegar no final da lista chama a função loadIncidents para carregar mais
-                onEndReached={loadIncidents}
-                // define o quão próximo do final da lista deve chamar a função loadIncidents - 20% do final
-                onEndReachedThreshold={0.2}
-                // exibe cada 'incident' da lista 'incidents' e define o nome do item como 'incident'
-                renderItem={({ item: incident }) => (
-                    <View>
-                        <View style={styles.incident}>
-                            <Text style={styles.incidentProperty}>
-                                ONG:
-                            </Text>
-                            <Text style={styles.incidentValue}>
-                                {incident.name}
-                            </Text>
-                            <Text style={styles.incidentProperty}>
-                                CASO:
-                            </Text>
-                            <Text style={styles.incidentValue}>
-                                {incident.title}
-                            </Text>
-                            <Text style={styles.incidentProperty}>
-                                VALOR:
-                            </Text>
-                            <Text style={styles.incidentValue}>
-                                {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}
-                            </Text>
-                            <View
-                            style={{
-                                borderBottomColor: '#ddd',
-                                borderBottomWidth: 1,
-                                marginBottom: 10,
-                            }}
-                            />
-                            <TouchableOpacity 
-                                style={styles.detailsButton} 
-                                onPress={() => navigateToDetail(incident)}
-                            >
-                                <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
+            {incidents.length > 0 ? (
+                <FlatList
+                    style={styles.incidentList}
+                    // define o conteudo da lista com os 'incidents'
+                    data={incidents}
+                    // define uma chave unica para cada incident usando o ID do mesmo
+                    keyExtractor={incident => String(incident.id)}
+                    // esconde a barra vertical da lista
+                    showsVerticalScrollIndicator={false}
+                    // chama o loadIncidents caso o usuario arraste a lista para baixo tentando atualizar a lista
+                    onRefresh={loadIncidents}
+                    // passa o loading se está carregando(true) ou não(false)
+                    refreshing={loading}
+                    // ao chegar no final da lista chama a função loadIncidents para carregar mais
+                    onEndReached={loadIncidents}
+                    // define o quão próximo do final da lista deve chamar a função loadIncidents - 20% do final
+                    onEndReachedThreshold={0.2}
+                    // exibe cada 'incident' da lista 'incidents' e define o nome do item como 'incident'
+                    renderItem={({ item: incident }) => (
+                        <View>
+                            <View style={styles.incident}>
+                                <Text style={styles.incidentProperty}>
+                                    ONG:
+                                </Text>
+                                <Text style={styles.incidentValue}>
+                                    {incident.name}
+                                </Text>
+                                <Text style={styles.incidentProperty}>
+                                    CASO:
+                                </Text>
+                                <Text style={styles.incidentValue}>
+                                    {incident.title}
+                                </Text>
+                                <Text style={styles.incidentProperty}>
+                                    VALOR:
+                                </Text>
+                                <Text style={styles.incidentValue}>
+                                    {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}
+                                </Text>
+                                <View
+                                style={{
+                                    borderBottomColor: '#ddd',
+                                    borderBottomWidth: 1,
+                                    marginBottom: 10,
+                                }}
+                                />
+                                <TouchableOpacity 
+                                    style={styles.detailsButton} 
+                                    onPress={() => navigateToDetail(incident)}
+                                >
+                                    <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
 
-                                <Feather name="arrow-right" size={16} color="#E02041"/>
-                            </TouchableOpacity>
+                                    <Feather name="arrow-right" size={16} color="#E02041"/>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                )}
-            />
+                    )}
+                />
+            ) : (
+                <View style={{
+                    marginTop: 30,
+                }}>
+                    <Text>Não há nenhum caso para ser exibido.</Text>
+                </View>
+            )}
         </View>
     );
 }
