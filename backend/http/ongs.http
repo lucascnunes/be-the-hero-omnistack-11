@@ -1,0 +1,34 @@
+# Criei esses requests REST para quem não quiser instalar o Insomnia ou Postman
+# Para utilizar esses arquivos no VSCODE instale o pacote REST Client
+
+# Listar todas as ONGs
+GET http://localhost:3333/ongs
+
+###
+
+# Criar nova ONG
+POST http://localhost:3333/ongs
+Content-Type: application/json
+
+{
+	"name": "APAD",
+	"email": "apad@apad.com.br",
+	"whatsapp": "47999999999",
+	"city": "Rio do Sul",
+	"uf": "SC",
+	"password": "123456789"
+}
+
+###
+
+# Lista os casos da ONG autenticada
+# Use o Cookie que foi enviado como resposta no login
+GET http://localhost:3333/profile
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly
+
+###
+
+# Apaga a ONG logada
+# Use o Cookie que foi enviado como resposta no login
+DELETE http://localhost:3333/ongs
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly

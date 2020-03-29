@@ -1,0 +1,21 @@
+# Criei esses requests REST para quem não quiser instalar o Insomnia ou Postman
+# Para utilizar esses arquivos no VSCODE instale o pacote REST Client
+
+# Pega as informações da ONG logada
+GET http://localhost:3333/account
+
+###
+
+# Atualizar dados da ONG logada
+#
+PUT http://localhost:3333/account
+Content-Type: application/json
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDY5NzIsImV4cCI6MTU4NTU5MzM3Mn0.TyO6Iqzu64UGG2I24_QL6mflAm_R2BNXVNb9bH4mR8o; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:36:12 GMT; HttpOnly
+
+{
+	"name": "Nova APAD",
+	"email": "apad@apad.com.br",
+	"whatsapp": "47999999999",
+	"city": "Rio do Sul",
+	"uf": "SC"
+}

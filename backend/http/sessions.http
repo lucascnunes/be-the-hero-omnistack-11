@@ -1,0 +1,27 @@
+# Criei esses requests REST para quem não quiser instalar o Insomnia ou Postman
+# Para utilizar esses arquivos no VSCODE instale o pacote REST Client
+
+
+# Fazer login
+# Use o Cookie de resposta nas outras requisições que precisarem de Cookie
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+    "email": "apad@apad.com.br",
+    "password": "123456789"
+}
+
+###
+
+# Fazer update do Coookie
+# Use o Cookie que foi enviado como resposta no login
+PUT http://localhost:3333/sessions
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDY5MzMsImV4cCI6MTU4NTU5MzMzM30.HoE-dpoZotqWxFuLI-JK2SGNx0ytSvKgpA4-dKQcCeA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:35:33 GMT; HttpOnly
+
+###
+
+# Fazer logout
+# Use o Cookie que foi enviado como resposta no login
+DELETE http://localhost:3333/sessions
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly

@@ -1,0 +1,42 @@
+# Criei esses requests REST para quem não quiser instalar o Insomnia ou Postman
+# Para utilizar esses arquivos no VSCODE instale o pacote REST Client
+
+# Lista todos os incidents
+GET http://localhost:3333/incidents
+
+###
+
+# Cria um incident para a ONG logada
+# Use o Cookie que foi enviado como resposta no login
+POST http://localhost:3333/incidents
+Content-Type: application/json
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly
+
+{
+	"title": "#1 caso",
+	"description": "Detalhes do caso",
+	"value": 210
+}
+
+###
+
+# Edita um incident da ONG logada
+# Use o Cookie que foi enviado como resposta no login
+# Mude o ID ao final da URL
+PUT http://localhost:3333/incidents/1
+Content-Type: application/json
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly
+
+{
+	"title": "#1 caso",
+	"description": "Detalhes do caso",
+	"value": 500
+}
+
+###
+
+# Deleta um incident da ONG logada
+# Use o Cookie que foi enviado como resposta no login
+# Mude o ID ao final da URL
+DELETE http://localhost:3333/incidents/1
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwYWRAYXBhZC5jb20uYnIiLCJpYXQiOjE1ODU1MDYxNTUsImV4cCI6MTU4NTU5MjU1NX0.-zr4nTmFE50nPZoAKc8X3UyhX4sirtkEkOx7Lo2GSwA; Max-Age=86400; Path=/; Expires=Mon, 30 Mar 2020 18:22:35 GMT; HttpOnly
