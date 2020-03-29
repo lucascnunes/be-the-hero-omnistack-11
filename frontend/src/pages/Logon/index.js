@@ -46,6 +46,9 @@ export default function Logon() {
       // guarda no localStorage quando expira o cookie
       localStorage.setItem('expire_at', response.data.expire_at);
 
+      // guarda no localStorage o ongName
+      localStorage.setItem('ongName', response.data.name);
+
       // se o login havia expirado
       if (expired) {
         // defina como falso
