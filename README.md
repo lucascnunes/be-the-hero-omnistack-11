@@ -81,6 +81,7 @@ EditIncident
   * Adicionei os timestamps **created_at** e **updated_at** às tabelas **ongs** e **incidents**
   * Adicionado autenticação com **JWT**
   * Adicionado **envio de e-mail** após o cadastro
+  * Armazenamento do **token JWT** utilizando cookie **httpOnly**
 
 ## Autor
 
