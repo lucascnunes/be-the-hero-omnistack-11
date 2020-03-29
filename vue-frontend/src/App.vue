@@ -1,16 +1,12 @@
 <template>
   <div id="app">
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
 }
 </script>
 
@@ -45,6 +41,7 @@ form input {
     border: 1px solid #dcdce6;
     border-radius: 8px;
     padding: 0 24px;
+    background: #fff !important;
 }
 
 form textarea {
@@ -102,5 +99,21 @@ form textarea {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.red-hero {
+  color: #E02041;
+}
+
+.gray-hero {
+    color: #a8a8b3;
+}
+
+button:disabled {
+    filter: brightness(0.5);
+}
+
+button:disabled:hover {
+    filter: brightness(0.6);
 }
 </style>

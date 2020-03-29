@@ -9,7 +9,7 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'http://localhost:8080'],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     exposedHeaders: ['Access-Control-Allow-Origin', 'X-Total-Count'],
     allowedHeaders: ['Content-Type'],

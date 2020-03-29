@@ -4,24 +4,28 @@
  Projeto desenvolvido na semana OmniStack 11 da [Rocketseat](https://rocketseat.com.br/) dias 23/03/2020 à 27/03/2020.
 
 Com as aulas online do Diego Fernandes.
+
+O projeto ensinado encontra-se [Aguardando a Rocketseat disponibilizar o repositório]
   
 ## Projeto
 
 Criar uma plataforma web/mobile utilizando *React* e *React-native* para frontend da web e mobile respectivamente e utilizar *Express* para o backend.
+
+**Meu projeto está bem modificado do que foi dado durante a aula, caso queira ver o projeto como foi idealizado e ensinado veja o github da Rocketseat acima**
   
-### Pré requisitos
+### Tecnologias utilizadas
 
 ```
-git, node, express, knex, sqlite, react, react-native, expo
+git, node, express, knex, sqlite, reactjs, react-native, expo, vuejs
 ```
-  
+
 ### Instalação
 
 Clone o repositório, utilizando **git clone** ou faça o **download** do repositório.
 
 **aviso que o arquivo de gravação de tela do emulador que esta na pasta vídeo possui 25mb**
 
-
+----
 
 Após clonar ou baixar o repositório instale as dependências necessárias:
 
@@ -52,18 +56,18 @@ Para visualização da aplicação mobile utilize o celular com o aplicativo *Ex
 
 ## Mudanças
 
-Adicionei algumas mudanças pessoais ao código então o mesmo não se encontra fiel as aulas, seguem abaixo:
+Mudanças feitas no projeto idealizado da aula para aprendizado, preferências pessoais e teste de tecnologias:
 
-* Banco de dados mantive o campo **id** do SQL intacto e adicionei um campo **key** para ser usado como identificado das ONGs
+#### Backend - Express
 
-* Adicionei uma janela de confirmação de cadastro de nova ONG no *frontend*.
+  * Banco de dados mantive o campo **id** do SQL intacto e adicionei um campo **key** para ser usado como identificado das ONGs
+  * Adicionei a pasta **http** com *REST requests* para rodar no **vscode** usando o pacote **Rest Client** caso não queira utilizar *insomnia* ou *postman*
+
+#### ReactJS - Frontend
+
+  * Adicionei uma janela de confirmação de cadastro de nova ONG no *frontend*.
 ```
 RegisterSuccess
-```
-  * Adicionei funções de refresh do **FlatList** no mobile para exibir o carregamento de novos casos:
-```
-onRefresh={loadIncidents}
-refreshing={loading}
 ```
   * Adicionado **paginação** no perfil da ONG frontend.
   * Adicionado página de **edição** de ONG
@@ -82,6 +86,20 @@ EditIncident
   * Adicionado autenticação com **JWT**
   * Adicionado **envio de e-mail** após o cadastro
   * Armazenamento do **token JWT** utilizando cookie **httpOnly**
+  * *(em breve)* adicionar **Redux** para lidar com as states
+
+#### React Native - Mobile
+
+  * Adicionei funções de refresh do **FlatList** no mobile para exibir o carregamento de novos casos:
+```
+onRefresh={loadIncidents}
+refreshing={loading}
+```
+
+#### VueJS - Frontend
+
+  * Adicionei um **frontend** feito em **VueJS**
+  * Utilizando **Vuex** para armazenamento de states e variaveis que eram armazenadas manualmente no *localStorage*
 
 ## Autor
 
