@@ -27,7 +27,7 @@ const jwtCookie = require('./utils/jwt.cookie');
 
 // Rota de login
 routes.post('/sessions', celebrate(loginValidation), SessionController.create);
-routes.put('/sessions', SessionController.update);
+routes.put('/sessions', jwt({secret:config.token.secret, getToken: jwtCookie}), SessionController.update);
 routes.delete('/sessions', jwt({secret:config.token.secret, getToken: jwtCookie}), celebrate(logoutValidation), SessionController.delete);
 
 // Rotas de ONGs
