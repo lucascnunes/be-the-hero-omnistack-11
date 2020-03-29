@@ -1,9 +1,9 @@
 const { Segments, Joi } = require('celebrate');
 
-const deleteOngValidation = {
+const logoutValidation = {
     [Segments.HEADERS]: Joi.object().keys({
         cookie: Joi.string().required(),
     }).unknown()
 };
 
-module.exports = deleteOngValidation;
+module.exports = logoutValidation;

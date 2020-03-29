@@ -18,15 +18,6 @@ export default function Account() {
   // instancia o history
   const history = useHistory();
 
-  // pega a token do localstorage
-  const token = localStorage.getItem("ongToken");
-
-  // Se não houver uma token salva no localStorage
-  if (!token) {
-    // envia o usuário para tela inicial
-    history.push('/');
-  }
-
   // define os states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,21 +34,23 @@ export default function Account() {
   // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o token mudar
   useEffect(() => {
     // faz um pedido GET para a rota do backend 'profile'
-    api.get('account', {
-        headers: {
-            // envia a token para o backend pelo cabeçalho da requisição
-            'Authorization': 'Bearer ' + token
-          }
-        // se tiver uma resposta
-    }).then(response => {
+    api.get('account')
+      .then(response => {
         // define os incidents com o data da resposta
         setName(response.data.name);
         setEmail(response.data.email);
         setWhatsapp(response.data.whatsapp);
         setCity(response.data.city);
         setUf(response.data.uf);
+    })
+    .catch(err => {
+      // se a pessoa não estiver logada
+      if(err.response.status === 401) {
+        // empurra pra pagina inicial
+        history.push('/');
+      }
     });
-  }, [token]);
+  }, [history]);
 
   // define a função handleUpdate
   async function handleUpdate(e) {
@@ -79,12 +72,7 @@ export default function Account() {
     // bloco de declaração try, se funcionar:
     try {
       // envia os states atualizados com metodo put para a rota 'account' do backend
-      const response = await api.put('account', data, {
-        headers: {
-          // envia a token para o backend pelo cabeçalho da requisição
-          'Authorization': 'Bearer ' + token,
-        }
-      });
+      const response = await api.put('account', data);
 
       // atualiza a variavel ongName no localStorage
       localStorage.setItem('ongName', response.data);
@@ -113,12 +101,7 @@ export default function Account() {
     // bloco de declaração try, se funcionar:
     try {
       // envia metodo delete para a rota 'ongs' do backend
-      await api.delete('ongs', {
-        headers: {
-          // envia a token para o backend pelo cabeçalho da requisição
-          'Authorization': 'Bearer ' + token,
-        }
-      });
+      await api.delete('ongs');
 
       // apaga todo o localStorage do navegador
       localStorage.clear();

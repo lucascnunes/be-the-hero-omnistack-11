@@ -18,19 +18,15 @@ export default function Profile() {
     // instancia o history
     const history = useHistory();
 
-    // pega a ongKey do localstorage
-    const token = localStorage.getItem("ongToken");
-
-    if (!token) {
-        history.push('/');
-    }
-
     // define os states
     const [incidents, setIncidents] = useState([]);
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [updateAlert, setShowUpdateAlert] = useState(false);
+
+    // get ongName
+    localStorage.getItem('ongName');
 
     // define a função loadIncidents
     async function loadIncidents() {
@@ -51,10 +47,6 @@ export default function Profile() {
 
         // solicita com metodo get para a rota 'profile' do backend
         const response = await api.get('profile', {
-            headers: {
-                // envia a ongKey para o backend pelo cabeçalho da requisição
-                'Authorization': 'Bearer ' + token
-            },
             // define um params no pedido get chamado page com o valor da pagina atual
             params: { page }
         });
@@ -67,6 +59,7 @@ export default function Profile() {
         
         // soma 1 a pagina atual
         setPage(page+1);
+
         // define loading falso
         setLoading(false);
     
@@ -82,15 +75,31 @@ export default function Profile() {
 
     // utiliza o useEffect para carregar uma vez toda vez que for carregada a página ou se o ongKey mudar
     useEffect(() => {
+
+        // pega quando o cookie expira
+        const expire = localStorage.getItem('expire_at');
+        // agora
+        const now = new Date();
+        // diferença entre as datas
+        const milliseconds = Math.abs(now - expire);
+        // qnts horas faltam
+        const hours = milliseconds / 36e5;
+        
+        // se faltar 1 hr para vencer o cookie atualiza
+        if (hours > 0 && hours < 1) {
+            api.put('sessions')
+            .then(response => {
+                localStorage.setItem('ongName', response.name);
+            });
+        }
+
+        // é para mostrar o updatealert?
         if (showUpdatedAlert) {
+            // mostre o updatealert
             setShowUpdateAlert(true);
         }
         // faz um pedido GET para a rota do backend 'profile'
         api.get('profile', {
-            headers: {
-                // envia a ongKey para o backend pelo cabeçalho da requisição
-                'Authorization': 'Bearer ' + token
-            }
             // se tiver uma resposta
         }).then(response => {
             // define os incidents com o data da resposta
@@ -99,20 +108,20 @@ export default function Profile() {
             setTotal(response.headers['x-total-count']);
             // carrega a primeira pagina e já coloca a segunda
             setPage(2);
+        })
+        .catch(err => {
+            if(err.response.status === 401) {
+                history.push('/');
+            }
         });
-    }, [token, showUpdatedAlert]);
+    }, [showUpdatedAlert, history]);
 
     // define a função handleDeleteIncident
     async function handleDeleteIncident(id) {
         // bloco de declaração try, se funcionar:
         try {
             // envia como metodo delete para a rota 'incidents/:id' do backend com o id passado a função handleDeleteIncident
-            await api.delete(`/incidents/${id}`, {
-              headers: {
-                // envia a ongKey para o backend pelo cabeçalho da requisição
-                  'Authorization': 'Bearer ' + token
-              }  
-            });
+            await api.delete(`/incidents/${id}`);
             // filtra e remove dos incidents o incident que tiver o mesmo id do incident apagado
             setIncidents(incidents.filter(incident => incident.id !== id));
 
@@ -130,9 +139,13 @@ export default function Profile() {
     }
 
     // define a função handleLogout
-    function handleLogout() {
-        // apaga todo o localStorage do navegador
-        localStorage.clear();
+    async function handleLogout() {
+        // foi feito pedido de logout
+        localStorage.setItem('logout', true);
+
+        // deleta a sessao e seta o cookie nulo
+        await api.delete('sessions');
+
         // empurra o cliente para a tela inicial
         history.push('/');
     }

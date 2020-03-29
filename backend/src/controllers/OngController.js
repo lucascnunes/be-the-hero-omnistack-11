@@ -41,13 +41,13 @@ module.exports = {
         });
 
         bcrypt.hash(password, 10)
-        .then(async (hash) => {
-            await connection('ongs')
-                .where('email', email)
-                .update({
-                    password: hash
-                });
-        });
+            .then(async (hash) => {
+                await connection('ongs')
+                    .where('email', email)
+                    .update({
+                        password: hash
+                    });
+            });
 
         const token = jsonwebtoken.sign({
             email: email,
@@ -60,24 +60,32 @@ module.exports = {
             .where('email', email)
             .first();
 
-        // definindo as informações do smtp
-        let transporter = nodemailer.createTransport({
-            host: config.smtp.host,
-            port: config.smtp.port,
-            secure: config.smtp.secure, // true for 465, false for other ports
-            auth: {
-              user: config.smtp.auth.user, // generated ethereal user
-              pass: config.smtp.auth.password // generated ethereal password
-            }
-        });
+        try {
+            // definindo as informações do smtp
+            let transporter = nodemailer.createTransport({
+                host: config.smtp.host,
+                port: config.smtp.port,
+                secure: config.smtp.secure, // true for 465, false for other ports
+                auth: {
+                user: config.smtp.auth.user, // generated ethereal user
+                pass: config.smtp.auth.password // generated ethereal password
+                }
+            });
 
-        // envia o email
-        await transporter.sendMail({
-            from: '"Be The Hero 💪" <hero@bethehero.com>', // sender address
-            to: ong.email, // list of receivers
-            subject: "Vamos encontrar heróis juntos ✔", // Subject line
-            text: `Seja bem vindo ${ong.name}, utilize nossa plataforma para adicionar seus casos e encontrar heróis que ajudaram sua organização.`, // plain text body
-        });
+            // envia o email
+            await transporter.sendMail({
+                from: '"Be The Hero 💪" <hero@bethehero.com>', // sender address
+                to: ong.email, // list of receivers
+                subject: "Vamos encontrar heróis juntos ✔", // Subject line
+                text: `Seja bem vindo ${ong.name}, utilize nossa plataforma para adicionar seus casos e encontrar heróis que ajudaram sua organização.`, // plain text body
+            });
+
+        } catch (error) {
+            return response.status(500).json({
+                error: 'Not able to send email of registration.',
+                message: error
+            });
+        }
 
         return response.json({
             email:  ong.email,

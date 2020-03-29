@@ -18,15 +18,6 @@ export default function NewIncident() {
     // instancia o history
     const history = useHistory();
 
-    // pega a ongToken do localstorage
-    const token = localStorage.getItem("ongToken");
-
-    // Se não houver uma ongToken salva no localStorage
-    if (!token) {
-        // envia o usuário para tela inicial
-        history.push('/');
-    }
-
     // define os states
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -34,6 +25,12 @@ export default function NewIncident() {
 
     // instancia o btnRegister como uma referencia
     const btnRegister = useRef();
+
+    // verifica se existe o ongname no localstorage senao envia para pagina inicial
+    const ongName = localStorage.getItem('ongName');
+    if(!ongName) {
+        history.push('/');
+    }
 
     // define a função handleNewIncident
     async function handleNewIncident(e) {
@@ -53,12 +50,14 @@ export default function NewIncident() {
         // bloco de declaração try, se funcionar:
         try {
             // envia os dados do formulário como metodo post para a rota 'incidents' do backend
-            await api.post('incidents', data, {
-                headers: {
-                    // envia a token para o backend pelo cabeçalho da requisição
-                    'Authorization': 'Bearer ' + token
+            await api.post('incidents', data)
+            .catch(err => {
+                // se a pessoa não estiver logada
+                if(err.response.status === 401) {
+                    // empurra pra pagina inicial
+                    history.push('/');
                 }
-            });
+              });
             // direciona para página profile
             history.push('/profile');
 

@@ -27,14 +27,8 @@ export default function Logon() {
   // instancia o history
   const history = useHistory();
 
-  // instancia token do localstorage
-  const token = localStorage.getItem('ongToken');
-
-  // se houver um token definido
-  if(token) {
-    // empurra o usuario para o profile
-    history.push('/profile');
-  }
+  // verifica se a sessão expirou
+  const expired = localStorage.getItem('expired');
 
   // define a função handleLogin
   async function handleLogin(e) {
@@ -43,15 +37,20 @@ export default function Logon() {
 
     // bloco de declaração try, se funcionar:
     try {
+      // limpa o localstorage
+      localStorage.clear();
+
+      // envia o pedido de login ao backend
       const response = await api.post('sessions', { email, password });
       
-      // guarda no localStorage a token JWT
-      localStorage.setItem('ongToken', response.data.token);
-      // guarda no localStorage o email
-      localStorage.setItem('ongEmail', email);
-      // guarda no localStorage a ongName
-      localStorage.setItem('ongName', response.data.name);
+      // guarda no localStorage quando expira o cookie
+      localStorage.setItem('expire_at', response.data.expire_at);
 
+      // se o login havia expirado
+      if (expired) {
+        // defina como falso
+        localStorage.setItem('expired', false);
+      }
       // direciona para página profile
       history.push('/profile');
     
@@ -98,6 +97,13 @@ export default function Logon() {
       {(deleteAlert ?
           <div className="confirmDelete">
               Sua conta foi apagada, é uma pena que decidiu sair, crie uma conta nova quando quiser voltar, estaremos lhe esperando.
+          </div>
+      :
+          ''
+      )}
+      {(expired === true ?
+          <div className="confirmDelete">
+              Sua sessão expirou, faça sua autenticação novamente para continuar.
           </div>
       :
           ''

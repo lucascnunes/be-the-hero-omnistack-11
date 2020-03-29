@@ -18,15 +18,6 @@ export default function EditIncident() {
     // instancia o history
     const history = useHistory();
 
-    // pega a token do localstorage
-    const token = localStorage.getItem("ongToken");
-
-    // Se não houver uma token salva no localStorage
-    if (!token) {
-        // envia o usuário para tela inicial
-        history.push('/');
-    }
-
     // define os states
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -45,20 +36,22 @@ export default function EditIncident() {
 
     useEffect(() => {
         // faz um pedido GET para a rota do backend 'profile'
-        api.get(`incidents/${id}`, {
-            headers: {
-                // envia a token para o backend pelo cabeçalho da requisição
-                'Authorization': 'Bearer ' + token
-            }
-        })
+        api.get(`incidents/${id}`)
         // se tiver uma resposta
         .then(response => {
             // define os incidents com o data da resposta
             setTitle(response.data.title);
             setDescription(response.data.description);
             setValue(response.data.value);
-        });
-    }, [token, id]);
+        })
+        .catch(err => {
+            // se a pessoa não estiver logada
+            if(err.response.status === 401) {
+                // empurra pra pagina inicial
+                history.push('/');
+            }
+          });
+    }, [id, history]);
     
     // define a função handleUpdateIncident
     async function handleUpdateIncident(e) {
@@ -78,12 +71,7 @@ export default function EditIncident() {
         // bloco de declaração try, se funcionar:
         try {
             // envia os dados do formulário como metodo post para a rota 'incidents' do backend
-            await api.put(`incidents/${id}`, data, {
-                headers: {
-                    // envia a token para o backend pelo cabeçalho da requisição
-                    'Authorization': 'Bearer ' + token
-                }
-            });
+            await api.put(`incidents/${id}`, data);
             // direciona para página profile
             history.push('/profile');
 

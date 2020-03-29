@@ -55,8 +55,6 @@ export default function Register() {
       const response = await api.post('ongs', data);
       // salva o token no localstorage
       localStorage.setItem('ongToken', response.data.token);
-      // salva o email no localstorage
-      localStorage.setItem('ongEmail', email);
       // define o state successRegistration como verdadeiro
       setSuccessRegistration(true);
 
