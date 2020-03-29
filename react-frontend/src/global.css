@@ -86,3 +86,11 @@ form textarea {
     align-items: center;
     justify-content: center;
 }
+
+button:disabled {
+    filter: brightness(0.5);
+}
+
+button:disabled:hover {
+    filter: brightness(0.6);
+}
