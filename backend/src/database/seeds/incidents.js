@@ -11,6 +11,8 @@ exports.seed = function(knex) {
           description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus voluptatem error itaque eum assumenda cumque ullam cupiditate quod, libero veritatis id consequatur dignissimos facilis quae tenetur alias temporibus esse numquam!",
           value: 999,
           ongs_id: 1,
+          created_at: new Date(),
+          updated_at: new Date()
         },
       ]);
     });
