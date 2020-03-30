@@ -148,7 +148,8 @@ export default function Incidents() {
                                     marginBottom: 10,
                                 }}
                                 />
-                                <TouchableOpacity 
+                                <TouchableOpacity
+                                    hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
                                     style={styles.detailsButton} 
                                     onPress={() => navigateToDetail(incident)}
                                 >
