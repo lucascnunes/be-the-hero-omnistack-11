@@ -78,7 +78,7 @@ export default function Incidents() {
         
         // se não houver incidents para exibir
         if (incidentsRef.current.length === 0) {
-            // tente carregar novos incidents a cada 5
+            // tente carregar novos incidents a cada 30 segundos
             const searchForIncidents = setInterval(() => {
                 loadIncidents();
                 // se carregar incidents
