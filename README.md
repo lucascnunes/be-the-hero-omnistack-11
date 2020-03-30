@@ -100,12 +100,14 @@ EditIncident
 
 #### React Native - Mobile
 
+  * Adicionei a exibição da **cidade** e do **estado** nos detalhes do caso.
   * Adicionei funções de refresh do **FlatList** no mobile para exibir o carregamento de novos casos:
 ```
 onRefresh={loadIncidents}
 refreshing={loading}
 ```
-  * Se não tiver nenhum caso para exibir fará requisição para listar casos a cada **6** segundos
+  * Se não tiver nenhum caso para exibir fará requisição para listar casos a cada **30** segundos
+  * Arrumei a disposição das informações conforme está no [Figma](https://www.figma.com/file/2C2yvw7jsCOGmaNUDftX9n/Be-The-Hero---OmniStack-11?node-id=37%3A394)
 
 #### VueJS - Frontend
 
