@@ -10,7 +10,7 @@
 
 Com as aulas online do Diego Fernandes.
 
-O projeto ensinado encontra-se [Aguardando a Rocketseat disponibilizar o repositório]
+O projeto ensinado encontra-se [Semana OmniStack 11](https://github.com/Rocketseat/semana-omnistack-11)
   
 ## Projeto
 
@@ -39,13 +39,13 @@ Utilize o **npm** para instalar as dependências nas pastas *backend*, *react-fr
 ```
 npm install
 ```
-Após instalar as dependências você precisa rodar o comando do knex para criar o banco de dados SQLite e as rodar as migrações. 
+Após instalar as dependências você precisa rodar o comando do knex no **backend** para criar o banco de dados SQLite e rodar as migrações. 
 
 ```
 npx knex migrate:latest
 ```
 
-Após a geração do banco de dados e das migrações você poderá rodar o backend, frontend e mobile utilizando
+Após a geração do banco de dados e das migrações você poderá rodar o backend, react-frontend, vue-frontend e mobile utilizando...
 
 **Para o backend e react-frontend:**
 ```
@@ -124,5 +124,5 @@ This project is licensed under the MIT License
 
 ## Agradecimentos
 
-* Rocketseat
-* Diego Fernandes
+* [Rocketseat](https://github.com/Rocketseat)
+* [Diego Fernandes](https://github.com/diego3g)
