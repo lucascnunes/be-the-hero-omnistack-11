@@ -45,7 +45,7 @@ Após instalar as dependências você precisa rodar o comando do knex no **backe
 npx knex migrate:latest
 ```
 
-Após a geração do banco de dados e das migrações você poderá rodar o backend, frontend e mobile utilizando
+Após a geração do banco de dados e das migrações você poderá rodar o backend, react-frontend, vue-frontend e mobile utilizando...
 
 **Para o backend e react-frontend:**
 ```
