@@ -124,5 +124,5 @@ This project is licensed under the MIT License
 
 ## Agradecimentos
 
-* Rocketseat
-* Diego Fernandes
+* [Rocketseat](https://github.com/Rocketseat)
+* [Diego Fernandes](https://github.com/diego3g)
