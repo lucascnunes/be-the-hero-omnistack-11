@@ -7,6 +7,17 @@ describe('ONG', () => {
         await connection.migrate.rollback();
         await connection.migrate.latest();
         await connection.seed.run(); 
+
+        await request(app)
+        .post('/sessions')
+        .send({
+            email: "apad@apad.com.br",
+            password: "123456789"
+        })
+        .expect(200)
+        .then(res => {
+            cookie = res.headers['set-cookie'][0]
+        })
     }, 10000);
 
     afterEach(async () => {
@@ -20,44 +31,44 @@ describe('ONG', () => {
     it('should be able to list all ONGs', async () => {
        
         // listando todas as ONGs
-        const response = await request(app)
-            .get('/ongs');
-        // espera que o primeiro resultado da array seja
-        expect(response.body).toEqual([
-            {
-                // id gerado no SEED de ONG
-                id: 1,
-                // a key gerada no SEED de ONG
-                key: '123abc',
-                name: "APAD",
-                email: "apad2@apad.com.br",
-                whatsapp: "3123123123",
-                city: "Rio do Sul",
-                uf: "SC"
-            }
-        ]);
+        await request(app)
+            .get('/ongs')
+            .then(response => {
+                expect(response.body[0]).toHaveProperty('id', 1);
+                expect(response.body[0]).toHaveProperty('name', "APAD");
+                expect(response.body[0]).toHaveProperty('email', "apad@apad.com.br");
+                expect(response.body[0]).toHaveProperty('whatsapp', "3123123123");
+                expect(response.body[0]).toHaveProperty('city', "Rio do Sul");
+                expect(response.body[0]).toHaveProperty('uf', "SC");
+
+            });
     });
     
     it('should be able to create a new ONG', async () => {
         // criando uma ONG
-        const response = await request(app)
+        await request(app)
             .post('/ongs')
             .send({
-                name: "APAD",
+                name: "APAD 2",
                 email: "apad2@apad.com.br",
                 whatsapp: "3123123123",
                 city: "Rio do Sul",
-                uf: "SC"
+                uf: "SC",
+                password: "123456789"
+            })
+            .then(response => {
+                expect(response.body).toHaveProperty('name', "APAD 2");
+                expect(response.body).toHaveProperty('expire_at');
             });
-        expect(response.body).toHaveProperty('key');
-        expect(response.body.key).toHaveLength(8);
     });
 
     it('should be able to delete the ONG', async () => {
         // deletando a ONG passando o cabeçalho de authorization com a key
-        const deleteResponse = await request(app)
+        await request(app)
             .delete('/ongs')
-            .set({ 'Authorization': '123abc' });
-        expect(deleteResponse.status).toBe(204);
+            .set({ 'Cookie': cookie })
+            .then(response => {
+                expect(response.status).toBe(204);
+            });
     });
 });

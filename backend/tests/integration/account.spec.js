@@ -7,6 +7,18 @@ describe('Account', () => {
         await connection.migrate.rollback();
         await connection.migrate.latest();
         await connection.seed.run(); 
+
+        // fazendo login para obter o cookie nos requests futuros
+        await request(app)
+        .post('/sessions')
+        .send({
+            email: "apad@apad.com.br",
+            password: "123456789"
+        })
+        .expect(200)
+        .then(res => {
+            cookie = res.headers['set-cookie'][0]
+        })
     }, 10000);
 
     afterEach(async () => {
@@ -19,33 +31,33 @@ describe('Account', () => {
 
     it('should be able to get the data from the ONG', async () => {
         // listando dados da ONG
-        const response = await request(app)
+        await request(app)
             .get('/account')
-            .set({ 'Authorization': '123abc' });
-        // espera que o primeiro resultado da array seja
-        expect(response.body).toEqual({
-            name: "APAD",
-            email: "apad2@apad.com.br",
-            whatsapp: "3123123123",
-            city: "Rio do Sul",
-            uf: "SC"
-        });
+            .set('Cookie', cookie)
+            .then((response) => {
+                expect(response.body).toHaveProperty("name", "APAD");
+                expect(response.body).toHaveProperty("email", "apad@apad.com.br");
+                expect(response.body).toHaveProperty("whatsapp", "3123123123");
+                expect(response.body).toHaveProperty("city", "Rio do Sul");
+                expect(response.body).toHaveProperty("uf", "SC");
+            });
     });
 
     it('should be able to update the data of the ONG', async () => {
-        const response = await request(app)
+        // atualizando informações da ONG
+        await request(app)
             .put('/account')
-            .set({ 'Authorization': '123abc' })
+            .set('Cookie', cookie)
             .send(
                 {
                     name: "APAD NOVO NOME",
-                    email: "apad2@apad.com.br",
+                    email: "apad@apad.com.br",
                     whatsapp: "99999999999",
                     city: "Rio do Sul",
                     uf: "SC"
                 }
-            );
-        // espera que o primeiro resultado da array seja
-        expect(typeof response.body === 'string');
+            ).then((response) => {
+                expect(typeof response.body === 'APAD NOVO NOME');
+            });
     });
 });
