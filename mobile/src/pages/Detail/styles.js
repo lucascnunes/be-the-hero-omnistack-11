@@ -48,6 +48,7 @@ export default StyleSheet.create({
 
     groupIncidentPropertiesItem: {
         flexDirection: 'column',
+        flex: 2,
     },
 
     contactBox: {

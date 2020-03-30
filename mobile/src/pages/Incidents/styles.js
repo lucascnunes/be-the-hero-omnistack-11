@@ -63,6 +63,17 @@ export default StyleSheet.create({
         color: '#737380',
     },
 
+    groupIncidentProperties: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+
+    groupIncidentPropertiesItem: {
+        flexDirection: 'column',
+        flex: 2,
+    },
+
     detailsButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',

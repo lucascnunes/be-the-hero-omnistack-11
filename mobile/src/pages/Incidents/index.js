@@ -123,23 +123,35 @@ export default function Incidents() {
                     renderItem={({ item: incident }) => (
                         <View>
                             <View style={styles.incident}>
-                                <Text style={styles.incidentProperty}>
-                                    ONG:
-                                </Text>
-                                <Text style={styles.incidentValue}>
-                                    {incident.name}
-                                </Text>
-                                <Text style={styles.incidentProperty}>
-                                    CASO:
-                                </Text>
-                                <Text style={styles.incidentValue}>
-                                    {incident.title}
-                                </Text>
+                                <View style={styles.groupIncidentProperties}>
+                                    <View style={styles.groupIncidentPropertiesItem}>
+                                        <Text style={[styles.incidentProperty, { marginTop: 0 }]}>
+                                            CASO:
+                                        </Text>
+                                    </View>
+                                    <View style={styles.groupIncidentPropertiesItem}>
+                                        <Text style={[styles.incidentProperty, { marginTop: 0 }]}>
+                                            ONG:
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View style={styles.groupIncidentProperties}>
+                                    <View style={styles.groupIncidentPropertiesItem}>
+                                        <Text style={styles.incidentValue}>
+                                            {incident.title}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.groupIncidentPropertiesItem}>
+                                        <Text style={styles.incidentValue}>
+                                            {incident.name}
+                                        </Text>
+                                    </View>
+                                </View>
                                 <Text style={styles.incidentProperty}>
                                     VALOR:
                                 </Text>
                                 <Text style={styles.incidentValue}>
-                                    {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}
+                                    {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value).replace(/^(\D+)/, '$1 ')} reais
                                 </Text>
                                 <View
                                 style={{
