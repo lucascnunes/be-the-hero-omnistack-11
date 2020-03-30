@@ -71,7 +71,7 @@ Mudanças feitas no projeto idealizado da aula para aprendizado, preferências p
 #### Backend - Express
 
   * Banco de dados mantive o campo **id** do SQL intacto e adicionei um campo **key** para ser usado como identificado das ONGs
-  * Adicionei os **testes** ao backend 📌 **desatualizado**, falta atualizar após as alterações para **jwt**
+  * Adicionei os **testes** ao backend (**atualizado com teste jwt**)
   * Adicionei a pasta **http** com *REST requests* para rodar no **vscode** usando o pacote **Rest Client** caso não queira utilizar *insomnia* ou *postman*
 
 #### ReactJS - Frontend
