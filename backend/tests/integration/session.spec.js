@@ -22,8 +22,10 @@ describe('Session', () => {
         const response = await request(app)
             .post('/sessions')
             .send({
-                key: '123abc',
+                email: 'apad@apad.com.br',
+                password: '123456789'
             });
-        expect(typeof response.body === 'string')
+        expect(response.body).toHaveProperty("expire_at")
+        expect(response.body).toHaveProperty("name")
     });
 });
