@@ -39,7 +39,7 @@ Utilize o **npm** para instalar as dependências nas pastas *backend*, *react-fr
 ```
 npm install
 ```
-Após instalar as dependências você precisa rodar o comando do knex para criar o banco de dados SQLite e as rodar as migrações. 
+Após instalar as dependências você precisa rodar o comando do knex no **backend** para criar o banco de dados SQLite e rodar as migrações. 
 
 ```
 npx knex migrate:latest
