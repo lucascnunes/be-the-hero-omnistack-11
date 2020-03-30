@@ -5,9 +5,9 @@ exports.up = function(knex) {
     table.string('title').notNullable();
     table.string('description').notNullable();
     table.decimal('value').notNullable();
-
     table.integer('ongs_id').unsigned();
     table.foreign('ongs_id').references('id').inTable('ongs');
+    table.timestamps();
   });
 };
 
