@@ -10,7 +10,7 @@
 
 Com as aulas online do Diego Fernandes.
 
-O projeto ensinado encontra-se [Aguardando a Rocketseat disponibilizar o repositório]
+O projeto ensinado encontra-se [Semana OmniStack 11](https://github.com/Rocketseat/semana-omnistack-11)
   
 ## Projeto
 
