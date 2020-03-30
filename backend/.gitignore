@@ -10,3 +10,6 @@ src/database/test.sqlite
 .env.development.local
 .env.test.local
 .env.production.local
+
+# http
+http
