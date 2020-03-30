@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 
@@ -20,6 +20,8 @@ export default function Incidents() {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    const incidentsRef = useRef(incidents)
 
     // instancia o navigation
     const navigation = useNavigation();
@@ -71,12 +73,19 @@ export default function Incidents() {
         // chama a função loadIncidents()
         loadIncidents();
 
+        incidentsRef.current = incidents;
+        
         // se não houver incidents para exibir
-        if (incidents.length === 0) {
+        if (incidentsRef.current.length === 0) {
             // tente carregar novos incidents a cada 5
-            setInterval(() => {
+            const searchForIncidents = setInterval(() => {
                 loadIncidents();
-            }, 6000);
+                // se carregar incidents
+                if (incidentsRef.current.length > 0) {
+                    // mata o interval
+                    clearInterval(searchForIncidents);
+                }
+            }, 30000);
         }
     }, [incidents]);
 
