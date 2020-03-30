@@ -73,6 +73,7 @@ export default function Incidents() {
         // chama a função loadIncidents()
         loadIncidents();
 
+        // pegando o valor atual do incidents usando referencia pois o useEffect só estava pegando o valor inicial dos incidents que é [].lenght = 0
         incidentsRef.current = incidents;
         
         // se não houver incidents para exibir
