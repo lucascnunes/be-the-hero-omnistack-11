@@ -110,7 +110,7 @@ export default function Profile() {
             setPage(2);
         })
         .catch(err => {
-            if(err.response.status === 401) {
+            if(err.response.statusCode === 401) {
                 history.push('/');
             }
         });
