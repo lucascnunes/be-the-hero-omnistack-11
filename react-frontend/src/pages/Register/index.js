@@ -16,6 +16,9 @@ import './styles.css';
 // carrega o logo da pasta assets
 import logoImg from '../../assets/logo.svg';
 
+// import json estados e cidades
+import { estados } from '../../assets/estados-cidades.json';
+
 export default function Register() {
   // define um state para ver se o registro obteve sucesso ou não
   const [successRegistration, setSuccessRegistration] = useState(false);
@@ -29,6 +32,7 @@ export default function Register() {
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
   const [password, setPassword] = useState("");
+  const [citiesJSON, setCitiesJSON] = useState([]);
 
   // instancia o btnRegister como uma referencia
   const btnRegister = useRef();
@@ -71,6 +75,15 @@ export default function Register() {
       // destrava o botao
       btnRegister.current.removeAttribute('disabled');
     }
+  }
+
+  function handleSelectState(uf) {
+    // recebe o UF do e.target.value e define o UF
+    setUf(uf);
+    // filtra entre os estados do json o estado que tenha a sigla === uf
+    const estadoSelecionado = estados.filter(estado => estado.sigla === uf);
+    // define a cidade selecionada como o estado[0]['cidades'] para popular o select city
+    setCitiesJSON(estadoSelecionado[0]['cidades']);
   }
 
   // se o registro foi um sucesso
@@ -119,26 +132,42 @@ export default function Register() {
               onChange={e => setWhatsapp(e.target.value)}
             />
             <div className="input-group">
-              <input 
-                placeholder="Cidade" 
+              <select
                 value={city}
-                required
                 onChange={e => setCity(e.target.value)}
-                style={{
-                  textTransform: 'capitalize'
-                }}
-              />
-              <input
-                value={uf}
-                placeholder="UF"
-                onChange={e => setUf(e.target.value)}
                 required
-                maxLength={2}
+              >
+                {citiesJSON.length > 0 ? 
+                  <option hidden>Escolha uma cidade</option>
+                :
+                  <option hidden>Escolha um UF</option>
+                }
+                {citiesJSON.length > 0 ? 
+                  citiesJSON.map(cidade => (
+                    <option
+                      key={cidade}
+                      value={cidade}>{cidade}</option>
+                  ))
+                :
+                  ''
+                }
+              </select>
+              <select
+                value={uf}
+                required
+                onChange={e => handleSelectState(e.target.value)}
                 style={{
-                    width: 80,
-                    textTransform: 'uppercase'
-                  }}
-              />
+                  width: 130
+                }}
+              >
+                <option hidden>UF</option>
+               {estados.map(estado => (
+                  <option
+                    key={estado.sigla}
+                    value={estado.sigla}
+                  >{estado.sigla}</option>
+               ))}
+              </select>
             </div>
             <input
             type="password"

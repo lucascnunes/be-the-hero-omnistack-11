@@ -41,6 +41,20 @@ form textarea {
     resize: vertical;
 }
 
+form select {
+    width: 100%;
+    font-size: 18px;
+    font-weight: ;
+    margin-top: 9px;
+    height: 60px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 16px 24px;
+    line-height: 24px;
+    resize: vertical;
+}
 .button {
     width: 100%;
     height: 60px;
