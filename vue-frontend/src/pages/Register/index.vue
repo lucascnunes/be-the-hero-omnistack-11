@@ -5,25 +5,27 @@
                 <section>
                     <img src="../../assets/logo.svg" alt="Be The Hero"/>
                     <h1> Cadastro realizado com sucesso! </h1>
-                    <p>Seja bem vindo ao Be The Hero!! Confira seu e-mail enviamos uma confirmação:</p>
-                    <a 
-                        rel="noopener noreferrer"
-                        target="_blank" 
-                        :href="'http://'+email.split('@')[1]" 
-                        style='
-                        background: #fff;
-                        padding: 20px;
-                        text-align: center;
-                        display: block;
-                        margin: 10px;
-                        font-size: 30px;
-                        color: #1e1e1f;
-                        text-decoration: none;
-                        font-weight: bold;
-                        '
-                    >
-                        Abrir o {{ email.split('@')[1].split('.')[0].charAt(0).toUpperCase() + email.split('@')[1].slice(1) }}
-                    </a>
+                    <div v-if="emailEnviado">
+                        <p>Seja bem vindo ao Be The Hero!! Confira seu e-mail enviamos uma confirmação:</p>
+                        <a 
+                            rel="noopener noreferrer"
+                            target="_blank" 
+                            :href="'http://'+email.split('@')[1]" 
+                            style='
+                            background: #fff;
+                            padding: 20px;
+                            text-align: center;
+                            display: block;
+                            margin: 10px;
+                            font-size: 30px;
+                            color: #1e1e1f;
+                            text-decoration: none;
+                            font-weight: bold;
+                            '
+                        >
+                            Abrir o {{ email.split('@')[1].split('.')[0].charAt(0).toUpperCase() + email.split('@')[1].slice(1) }}
+                        </a>
+                    </div>
                     <button 
                         class="button"
                         @click="$router.push('/profile')"
@@ -81,7 +83,7 @@
                             autocomplete="off"
                             placeholder="UF"
                             required
-                            maxLength={2}
+                            maxLength="2"
                             style="
                                 width: 80px;
                                 text-transform: uppercase;
@@ -121,6 +123,7 @@ export default {
             city: '',
             uf: '',
             password: '',
+            emailEnviado: false,
         }
     },
     methods: {
@@ -150,6 +153,9 @@ export default {
                 this.$store.commit('SET_EXPIRE_TIME', response.data.expire_at)
                 this.$store.commit('SET_EXPIRED', false)
                 this.$store.commit('USER_LOGGED', true)
+                if(response.data.email === true) {
+                    this.emailEnviado = true
+                }
             })
             .catch((error) => {
                 this.sending = false
