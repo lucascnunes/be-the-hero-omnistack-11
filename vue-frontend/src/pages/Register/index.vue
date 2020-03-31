@@ -162,7 +162,7 @@ export default {
                 if (error.response.data.statusCode === 400) {
                     this.$toast.error(error.response.data.message)
                 } else {
-                    this.$toast.error(error.response.data.error)
+                    this.$toast.error(error.response.data.message)
                 }
             })
         }
