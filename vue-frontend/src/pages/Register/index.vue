@@ -53,13 +53,6 @@
                     required
                     />
                     <input 
-                    type="email" 
-                    autocomplete="off"
-                    placeholder="E-mail" 
-                    v-model="email"
-                    required
-                    />
-                    <input 
                     type="tel" 
                     autocomplete="off"
                     placeholder="Whatsapp"
@@ -68,27 +61,37 @@
                     minLength="10"
                     maxLength="11"
                     />
+                    <input 
+                    type="email" 
+                    autocomplete="off"
+                    placeholder="E-mail" 
+                    v-model="email"
+                    required
+                    />
                     <div class="input-group">
-                        <input 
+                        <select 
                             autocomplete="off"
-                            placeholder="Cidade" 
-                            v-model="city"
                             required
-                            style="
-                                text-transform: capitalize;
-                            "
-                        />
-                        <input
-                            v-model="uf"
+                            v-model="cidadeSelecionada"
+                        >
+                            <option selected hidden disabled>
+                                <span v-if="typeof estadoSelecionado === 'string'">Escolha um UF</span>
+                                <span v-else>Escolha uma cidade</span>
+                            </option>
+                            <option v-for="cidade in estadoSelecionado['cidades']" :key="cidade" :value="cidade">{{ cidade }}</option>
+                        </select>
+                        <select 
                             autocomplete="off"
-                            placeholder="UF"
                             required
-                            maxLength="2"
+                            v-model="estadoSelecionado"
                             style="
-                                width: 80px;
+                                width: 130px;
                                 text-transform: uppercase;
                             "
-                        />
+                        >
+                            <option selected hidden disabled>UF</option>
+                            <option v-for="estado in estados" :key="estado.sigla" :value="estado">{{ estado.sigla }}</option>
+                        </select>
                     </div>
                     <input
                         type="password"
@@ -108,6 +111,8 @@
 
 <script>
 import { ArrowLeftIcon } from 'vue-feather-icons'
+import { estados } from '../../assets/estados-cidades.json'
+
 export default {
     name: 'Register',
     components: {
@@ -124,6 +129,9 @@ export default {
             uf: '',
             password: '',
             emailEnviado: false,
+            cidadeSelecionada: 'Escolha um UF',
+            estadoSelecionado: 'UF',
+            estados: estados
         }
     },
     methods: {
@@ -165,6 +173,15 @@ export default {
                     this.$toast.error(error.response.data.message)
                 }
             })
+        }
+    },
+    watch: {
+        estadoSelecionado(val) {
+            this.cidadeSelecionada = 'Escolha uma cidade'
+            this.uf = val.sigla
+        },
+        cidadeSelecionada(val) {
+            this.city = val
         }
     },
 }
