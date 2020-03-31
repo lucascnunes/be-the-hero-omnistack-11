@@ -102,7 +102,8 @@ module.exports = {
         
         return response.json({
             expire_at: date.setDate(date.getDate() + 1),
-            name:   ong.name
+            name:   ong.name,
+            email: config.smtp.host !== 'host_smtp' ? true : false
         });
     },
 

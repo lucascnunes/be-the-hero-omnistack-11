@@ -19,21 +19,32 @@ export default function RegisterSuccess({ children }) {
         <section>
           <img src={logoImg} alt="Be The Hero" />
           <h1> Cadastro realizado com sucesso! </h1>
-          <p>Seja bem vindo ao Be The Hero!! Confira seu e-mail enviamos uma confirmação:</p>
-          <a rel="noopener noreferrer" target="_blank" href={ 'http://'+children.split('@')[1] } style={{
-              background: "#fff",
-              padding: 20,
-              textAlign: "center",
-              display: "block",
-              margin: 10,
-              fontSize: 30,
-              color: '#1e1e1f',
-              textDecoration: 'none',
-              fontWeight: 'bold'
-            }}
-          >
-            Abrir o { children.split('@')[1].split('.')[0].toUpperCase() }
-          </a>
+          {
+            // se o e-mail foi enviado exiba mensagem
+          children['email'] === true ? (
+            <div>
+              <p>Seja bem vindo ao Be The Hero!! Confira seu e-mail enviamos uma confirmação:</p>
+              <a rel="noopener noreferrer" target="_blank" href={ 'http://'+children['email'].split('@')[1] } style={{
+                  background: "#fff",
+                  padding: 20,
+                  textAlign: "center",
+                  display: "block",
+                  margin: 10,
+                  fontSize: 30,
+                  color: '#1e1e1f',
+                  textDecoration: 'none',
+                  fontWeight: 'bold'
+                }}
+              >
+                Abrir o { children['email'].split('@')[1].split('.')[0].toUpperCase() }
+              </a>
+            </div>
+          )
+          :
+          (
+            ''
+          )
+          }
           <button 
             className="button"
             // Utilizando history push para levar o usuario a página inicial somente para aprender

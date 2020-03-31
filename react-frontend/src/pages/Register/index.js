@@ -19,6 +19,8 @@ import logoImg from '../../assets/logo.svg';
 export default function Register() {
   // define um state para ver se o registro obteve sucesso ou não
   const [successRegistration, setSuccessRegistration] = useState(false);
+  // define um stage para ver se o email foi enviado ou não
+  const [sentEmail, setSentEmail] = useState(false);
 
   // define os states
   const [name, setName] = useState("");
@@ -53,6 +55,10 @@ export default function Register() {
     try {
       // envia os dados do formulário como metodo post para a rota 'ongs' do backend
       const response = await api.post('ongs', data);
+      // verifica se o e-mail foi enviado
+      if (response.data.email === true) {
+        setSentEmail(true);
+      }
       // define o state successRegistration como verdadeiro
       setSuccessRegistration(true);
 
@@ -72,7 +78,7 @@ export default function Register() {
     // exibe este jsx com a página RegisterSuccess com um children da ong_key
     return (
       <RegisterSuccess>
-        {email}
+        {{email, sentEmail}}
       </RegisterSuccess>
     );
     
