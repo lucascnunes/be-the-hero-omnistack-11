@@ -124,6 +124,7 @@ export default function EditIncident() {
                         placeholder="Valor em reais"
                         value={value}
                         required
+                        min={0}
                         onChange={e => setValue(e.target.value)}
                     />
                     <div className="button-group">

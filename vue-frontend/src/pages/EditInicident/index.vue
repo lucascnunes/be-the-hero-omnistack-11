@@ -32,6 +32,7 @@
                         type="number" 
                         placeholder="Valor em reais"
                         v-model="value"
+                        min="0"
                         required
                     />
                     <div class="button-group">
