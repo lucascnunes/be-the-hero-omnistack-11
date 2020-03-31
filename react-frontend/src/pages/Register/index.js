@@ -53,8 +53,6 @@ export default function Register() {
     try {
       // envia os dados do formulário como metodo post para a rota 'ongs' do backend
       const response = await api.post('ongs', data);
-      // salva o token no localstorage
-      localStorage.setItem('ongToken', response.data.token);
       // define o state successRegistration como verdadeiro
       setSuccessRegistration(true);
 
