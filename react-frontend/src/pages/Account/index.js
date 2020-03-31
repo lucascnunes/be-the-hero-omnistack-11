@@ -86,7 +86,9 @@ export default function Account() {
     // se der erro
     } catch (error) {
       // envia alerta de erro ao navegador
-      alert('Não conseguimos atualizar suas informações, tente novamente.');
+      alert(error.response.data.error);
+      // destrava o botao
+      btnSave.current.removeAttribute('disabled');
     }
   }
 
@@ -115,7 +117,9 @@ export default function Account() {
     // se der erro
     } catch (error) {
       // envia alerta de erro ao navegador
-      alert('Não conseguimos atualizar suas informações, tente novamente.');
+      alert(error.response.data.error);
+      // destrava o botao
+      btnDelete.current.removeAttribute('disabled');
     }
   }
   

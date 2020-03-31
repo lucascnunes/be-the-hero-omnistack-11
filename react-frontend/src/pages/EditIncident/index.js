@@ -80,7 +80,9 @@ export default function EditIncident() {
             // libera o uso do botão novamente
             btnAtualizar.current.removeAttribute('disabled');
             // envia alerta de erro ao navegador
-            alert('Erro ao atualizar o caso, tente novamente.');
+            alert(error.response.data.error);
+            // destrava o botao
+            btnAtualizar.current.removeAttribute('disabled');
         }
     }
 

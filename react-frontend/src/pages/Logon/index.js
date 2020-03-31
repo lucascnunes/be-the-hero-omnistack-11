@@ -60,7 +60,7 @@ export default function Logon() {
     // se der erro
     } catch (error) {
       // exibe alerta no navegador
-      alert('Falha no login, tente novamente');
+      alert(error.response.data.error);
     }
   }
 

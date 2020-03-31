@@ -63,7 +63,9 @@ export default function Register() {
       // define o state successRegistration como falso
       setSuccessRegistration(false);
       // envia alerta de erro ao navegador
-      alert('Não foi possível fazer seu cadastro.');
+      alert(error.response.data.message);
+      // destrava o botao
+      btnRegister.current.removeAttribute('disabled');
     }
   }
 

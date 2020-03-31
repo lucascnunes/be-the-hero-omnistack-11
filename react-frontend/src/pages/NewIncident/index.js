@@ -66,7 +66,9 @@ export default function NewIncident() {
             // libera o uso do botão novamente
             btnRegister.current.removeAttribute('disabled');
             // envia alerta de erro ao navegador
-            alert('Erro ao cadastrar caso, tente novamente.');
+            alert(error.response.data.error);
+            // destrava o botao
+            btnRegister.current.removeAttribute('disabled');
         }
     }
 
