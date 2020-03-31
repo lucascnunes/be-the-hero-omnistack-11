@@ -114,6 +114,7 @@ refreshing={loading}
 
   * Adicionei um **frontend** feito em **VueJS**
   * Utilizando **Vuex** para armazenamento de states e variaveis que eram armazenadas manualmente no *localStorage*
+  * Adicionei dois **select input** na página de registro para seleção de **estados** e **cidades**
 
 ## Autor
 
