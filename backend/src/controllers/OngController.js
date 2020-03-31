@@ -23,7 +23,8 @@ module.exports = {
         
         if(ong) {
             return response.status(400).json({
-                error: 'This user already exist.'
+                error: 'User exist',
+                message: 'This user already exist.'
             });
         }
 
@@ -41,8 +42,8 @@ module.exports = {
         });
 
         bcrypt.hash(password, 10)
-            .then((hash) => {
-                connection('ongs')
+            .then(async (hash) => {
+                await connection('ongs')
                     .where('email', email)
                     .update({
                         password: hash
