@@ -96,6 +96,7 @@ EditIncident
   * Adicionado autenticação com **JWT**
   * Adicionado **envio de e-mail** após o cadastro
   * Armazenamento do **token JWT** utilizando cookie **httpOnly**
+  * Adicionei dois **select input** na página de registro para seleção de **estados** e **cidades**
   * *(em breve)* adicionar **Redux** para lidar com as states
 
 #### React Native - Mobile
