@@ -11,6 +11,8 @@ import Account from './pages/Account';
 
 import { isAuthenticated } from './services/auth';
 
+
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route 
         { ...rest }
@@ -23,14 +25,27 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         } 
     />
 );
+            
+const GuestRoute = ({ component: Component, ...rest }) => (
+    <Route 
+        { ...rest }
+        render={ props => 
+            isAuthenticated() ? (
+                <Redirect to={{ pathname: '/profile', state: { from: props.location } }} />
+            ) : (
+                    <Component { ...props } />
+            )
+        } 
+    />
+);
 
 export default function Routes() {
     // retorna jsx
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={Logon} />
-                <Route path="/register" component={Register} />
+                <GuestRoute path="/" exact component={Logon} />
+                <GuestRoute path="/register" component={Register} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/account" component={Account} />
                 <Route path="/incidents" exact component={EditIncident} />

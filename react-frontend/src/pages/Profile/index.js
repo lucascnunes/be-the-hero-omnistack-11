@@ -111,6 +111,9 @@ export default function Profile() {
         })
         .catch(err => {
             if(err.response.statusCode === 401) {
+                // falhou login
+                localStorage.setItem('expired', true);
+                // vai pro login
                 history.push('/');
             }
         });
@@ -140,11 +143,15 @@ export default function Profile() {
 
     // define a função handleLogout
     async function handleLogout() {
-        // foi feito pedido de logout
-        localStorage.setItem('logout', true);
-
+        
         // deleta a sessao e seta o cookie nulo
-        await api.delete('sessions');
+        await api.delete('sessions')
+        .catch(error => {
+            alert(error.response.data.error);
+        });
+        
+        // foi feito pedido de logout
+        localStorage.clear();
 
         // empurra o cliente para a tela inicial
         history.push('/');

@@ -21,6 +21,4 @@ app.use(routes);
 app.use(errors());
 app.use(helmet());
 
-app.disable('x-powered-by');
-
 module.exports = app;
