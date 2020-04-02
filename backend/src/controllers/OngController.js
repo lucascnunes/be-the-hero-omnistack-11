@@ -31,31 +31,24 @@ module.exports = {
         const created_at = new Date().toISOString().slice(0, 19).replace('T', ' '); 
         const updated_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
+        const hash = bcrypt.hashSync(password, 10);
+
         await connection('ongs').insert({
             name,
             email,
             whatsapp,
             city,
             uf,
+            password: hash,
             created_at,
             updated_at
         });
-
-        bcrypt.hash(password, 10)
-            .then(async (hash) => {
-                await connection('ongs')
-                    .where('email', email)
-                    .update({
-                        password: hash
-                    });
-            });
 
         ong = await connection('ongs')
             .select(['name', 'email'])
             .where('email', email)
             .first();
         
-
         if (config.smtp.host !== 'host_smtp') {
             try {
                 // definindo as informações do smtp
