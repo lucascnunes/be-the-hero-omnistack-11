@@ -119,6 +119,7 @@ refreshing={loading}
 ## Autor
 
 **Lucas Nunes** 
+* [soulucas.com.br](https://soulucas.com.br)
 * [Github](https://github.com/lucascnunes)
 * Discord - Chizuko#0959
 
